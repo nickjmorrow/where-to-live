@@ -1,0 +1,12 @@
+{
+	"extends": "tslint:recommended",
+	"rules": {
+		"indent": [true, "tabs", 4],
+		"trailing-comma": false,
+		"object-literal-sort-keys": false,
+		"ordered-imports": false,
+		"arrow-parens": false,
+		"no-empty-interface": true
+	},
+	"defaultSeverity": "error"
+}
