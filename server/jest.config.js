@@ -1,5 +1,11 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
+const { readdirSync } = require('fs');
+
+const getDirectories = source =>
+	readdirSync(source, { withFileTypes: true })
+		.filter(dirent => dirent.isDirectory())
+		.map(dirent => dirent.name);
 
 module.exports = {
 	// All imported modules in your tests should be mocked automatically
@@ -76,7 +82,10 @@ module.exports = {
 	// ],
 
 	// A map from regular expressions to module names that allow to stub out resources with a single module
-	// moduleNameMapper: {},
+	moduleNameMapper: getDirectories('src').reduce((agg, cur) => {
+		agg[`^${cur}/(.*)`] = `<rootDir>/src/${cur}/$1`;
+		return agg;
+	}, {}),
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
 	// modulePathIgnorePatterns: [],
@@ -105,9 +114,9 @@ module.exports = {
 	// A path to a custom resolver
 	// resolver: null,
 	transform: {
-		"^.+\\.tsx?$": "ts-jest"
+		'^.+\\.tsx?$': 'ts-jest',
 	},
-	roots: ["<rootDir>/src"],
+	roots: ['<rootDir>/src'],
 	// Automatically restore mock state between every test
 	// restoreMocks: false,
 
@@ -132,7 +141,7 @@ module.exports = {
 	// snapshotSerializers: [],
 
 	// The test environment that will be used for testing
-	testEnvironment: "node",
+	testEnvironment: 'node',
 
 	// Options that will be passed to the testEnvironment
 	// testEnvironmentOptions: {},
@@ -141,7 +150,7 @@ module.exports = {
 	// testLocationInResults: false,
 
 	// The glob patterns Jest uses to detect test files
-	testMatch: ["**/__tests__/**/*.[t]s?(x)", "**/?(*.)+(spec|test).[t]s?(x)"]
+	testMatch: ['**/__tests__/**/*.[t]s?(x)', '**/?(*.)+(spec|test).[t]s?(x)'],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
 	// testPathIgnorePatterns: [

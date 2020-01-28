@@ -12,6 +12,19 @@ export class CityProvider {
 	}
 
 	public async getCities(): Promise<CityModel[]> {
-		return (await this.entityManagerProvider.getEntityManager()).find(City);
+		const cityEntities = await (await this.entityManagerProvider.getEntityManager()).find(City);
+		console.log(cityEntities);
+		return cityEntities.map(this.toCityModel);
+	}
+
+	private toCityModel(city: City): CityModel {
+		return {
+			cityId: city.cityId,
+			label: city.name,
+			costOfLiving: city.costOfLiving,
+			population: city.population,
+			happiness: city.happiness,
+			techJobs: city.techJobs,
+		};
 	}
 }

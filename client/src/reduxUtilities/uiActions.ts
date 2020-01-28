@@ -10,6 +10,9 @@ export enum UiActionKeys {
 	TOGGLE_CITY = 'TOGGLE_CITY',
 	DECREMENT_COUNTER = 'DECREMENT_COUNTER',
 	INCREMENT_COUNTER = 'INCREMENT_COUNTER',
+	GET_METRICS = 'GET_METRICS',
+	GET_METRICS_SUCCESS = 'GET_METRICS_SUCCESS',
+	GET_METRICS_FAILURE = 'GET_METRICS_FAILURE',
 }
 
 const getCities = {
@@ -25,8 +28,15 @@ const updateCounter = {
 	increment: (metric: Metric) => action(UiActionKeys.INCREMENT_COUNTER, metric),
 };
 
+const getMetrics = {
+	request: () => action(UiActionKeys.GET_METRICS),
+	success: (metrics: Metric[]) => action(UiActionKeys.GET_METRICS_SUCCESS, metrics),
+	failure: (message: string) => action(UiActionKeys.GET_METRICS_FAILURE, message),
+};
+
 export const uiActions = {
 	getCities,
 	toggleCity,
 	updateCounter,
+	getMetrics,
 };

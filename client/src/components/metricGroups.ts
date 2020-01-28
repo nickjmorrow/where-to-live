@@ -10,13 +10,13 @@ export const metricGroups = [
 		name: 'Financial',
 		metrics: [
 			{ label: 'Cost of Living', accessor: 'costOfLiving' },
-			{ label: 'Median Income', accessor: 'medianIncome' },
+			{ label: 'Tech Jobs', accessor: 'techJobs' },
 		],
 	},
 	{
 		name: 'Personal',
 		metrics: [
-			{ label: 'Crime Rate', accessor: 'crimeRate' },
+			{ label: 'Happiness', accessor: 'happiness' },
 			{ label: 'Population', accessor: 'population' },
 		],
 	},

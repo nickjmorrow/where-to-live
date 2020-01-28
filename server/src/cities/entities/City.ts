@@ -7,4 +7,16 @@ export class City {
 
 	@Column({ name: 'name' })
 	name!: string;
+
+	@Column({ name: 'population' })
+	population!: number;
+
+	@Column({ name: 'cost_of_living' })
+	costOfLiving!: number;
+
+	@Column({ name: 'tech_jobs' })
+	techJobs!: number;
+
+	@Column({ name: 'happiness' })
+	happiness!: number;
 }

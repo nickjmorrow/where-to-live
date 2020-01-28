@@ -10,6 +10,7 @@ export type UiState = Readonly<typeof initialState>;
 
 const initialState = {
 	cities: [] as City[],
+	metrics: [] as Metric[],
 	metricGroups: metricGroups,
 };
 
@@ -18,6 +19,10 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 		case UiActionKeys.GET_CITIES_SUCCESS:
 			return produce(state, draftState => {
 				draftState.cities = action.payload;
+			});
+		case UiActionKeys.GET_METRICS_SUCCESS:
+			return produce(state, draftState => {
+				draftState.metrics = action.payload;
 			});
 		case UiActionKeys.TOGGLE_CITY:
 			return produce(state, draftState => {

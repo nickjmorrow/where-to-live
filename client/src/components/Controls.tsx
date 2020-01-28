@@ -3,7 +3,6 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCities, getMetricGroups, getMetricsSelector } from 'reduxUtilities/uiSelectors';
 import { Collapse } from 'react-collapse';
-import { Metric } from 'types/Metric';
 import { uiActions } from 'reduxUtilities/uiActions';
 import { City } from 'types/City';
 
