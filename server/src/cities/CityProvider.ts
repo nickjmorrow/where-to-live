@@ -13,7 +13,6 @@ export class CityProvider {
 
 	public async getCities(): Promise<CityModel[]> {
 		const cityEntities = await (await this.entityManagerProvider.getEntityManager()).find(City);
-		console.log(cityEntities);
 		return cityEntities.map(this.toCityModel);
 	}
 

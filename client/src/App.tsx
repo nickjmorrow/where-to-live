@@ -35,9 +35,13 @@ const themeInputs: ArgumentType<typeof updateThemeInputs>[0] = {
 const AppInternal: React.FC<RouteComponentProps> = () => {
 	const dispatch = useDispatch();
 	dispatch(uiActions.getCities.request());
+	dispatch(uiActions.getMetricGroups.request());
 
 	return (
-		<div className="App" style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', marginTop: '300px' }}>
+		<div
+			className="App"
+			style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', marginTop: '300px' }}
+		>
 			<ThemeContext.Provider value={getThemeFromNewInputs(themeInputs)}>
 				<Main />
 			</ThemeContext.Provider>

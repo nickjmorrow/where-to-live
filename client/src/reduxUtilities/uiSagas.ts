@@ -9,9 +9,13 @@ const apiRoutes = {
 		route: '/defaultCityScores',
 		method: axios.get,
 	},
-	getMetrics: {
-		route: '/metrics',
+	getMetricGroups: {
+		route: '/metricGroups',
 		method: axios.get,
+	},
+	calculateCityScores: {
+		route: '/calculateScores',
+		method: axios.post,
 	},
 };
 
@@ -31,16 +35,34 @@ function* watchGetCitiesAsync() {
 
 function* getMetricsAsync() {
 	try {
-		const { data } = yield call(apiRoutes.getMetrics.method, apiRoutes.getMetrics.route);
-		yield put(uiActions.getMetrics.success(data));
+		const { data } = yield call(apiRoutes.getMetricGroups.method, apiRoutes.getMetricGroups.route);
+		yield put(uiActions.getMetricGroups.success(data));
 	} catch (error) {
 		console.error(error);
-		yield put(uiActions.getMetrics.failure(error));
+		yield put(uiActions.getMetricGroups.failure(error));
 	}
 }
 
 function* watchGetMetricsAsync() {
-	yield takeEvery(UiActionKeys.GET_METRICS, getMetricsAsync);
+	yield takeEvery(UiActionKeys.GET_METRIC_GROUPS, getMetricsAsync);
 }
 
-export const uiSagas = [watchGetCitiesAsync, watchGetMetricsAsync];
+function* calculateCityScoresAsync(action: ReturnType<typeof uiActions.calculateCityScores.request>) {
+	try {
+		const { data } = yield call(
+			apiRoutes.calculateCityScores.method,
+			apiRoutes.calculateCityScores.route,
+			action.payload,
+		);
+		yield put(uiActions.calculateCityScores.success(data));
+	} catch (error) {
+		console.error(error);
+		yield put(uiActions.calculateCityScores.failure(error));
+	}
+}
+
+function* watchCalculateCityScores() {
+	yield takeEvery(UiActionKeys.CALCULATE_CITY_SCORES, calculateCityScoresAsync);
+}
+
+export const uiSagas = [watchGetCitiesAsync, watchGetMetricsAsync, watchCalculateCityScores];

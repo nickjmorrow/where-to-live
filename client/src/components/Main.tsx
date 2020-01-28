@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Table } from 'components/Table';
 import { useThemeContext } from '@nickjmorrow/react-component-library';
 import { Controls } from 'components/Controls';
+import { CalculateButton } from 'components/CalculateButton';
 
 export const Main: React.FC = () => {
 	const theme = useThemeContext();
@@ -19,6 +20,7 @@ export const Main: React.FC = () => {
 		>
 			<Controls />
 			<Table />
+			<CalculateButton />
 		</div>
 	);
 };

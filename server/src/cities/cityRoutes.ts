@@ -2,7 +2,7 @@ import { container } from 'tsyringe';
 import { Route } from '../infrastructure/types';
 import { CityProvider } from 'cities/CityProvider';
 import { ScoreCalculator } from 'cities/ScoreCalculator';
-import { metrics } from 'cities/constants';
+import { metrics, metricGroups } from 'cities/constants';
 
 export const routes: Route[] = [
 	{
@@ -29,10 +29,10 @@ export const routes: Route[] = [
 		},
 	},
 	{
-		path: '/metrics',
+		path: '/metricGroups',
 		method: 'get',
 		handler: async (req, res) => {
-			res.json(metrics);
+			res.json(metricGroups);
 		},
 	},
 ];

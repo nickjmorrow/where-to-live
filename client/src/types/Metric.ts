@@ -3,4 +3,5 @@ export interface Metric {
 	accessor: string;
 	isVisible: boolean;
 	multiplier: number;
+	isIncludedInCalculation: boolean;
 }

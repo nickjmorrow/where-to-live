@@ -2,7 +2,6 @@ import { ActionType } from 'typesafe-actions';
 import { produce } from 'immer';
 import { uiActions, UiActionKeys } from 'reduxUtilities/uiActions';
 import { City } from 'types/City';
-import { metricGroups } from 'components/metricGroups';
 import { MetricGroup } from 'types/MetricGroup';
 import { Metric } from 'types/Metric';
 
@@ -10,8 +9,7 @@ export type UiState = Readonly<typeof initialState>;
 
 const initialState = {
 	cities: [] as City[],
-	metrics: [] as Metric[],
-	metricGroups: metricGroups,
+	metricGroups: [] as MetricGroup[],
 };
 
 export const uiReducer = (state: UiState = initialState, action: ActionType<typeof uiActions>) => {
@@ -20,9 +18,13 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 			return produce(state, draftState => {
 				draftState.cities = action.payload;
 			});
-		case UiActionKeys.GET_METRICS_SUCCESS:
+		case UiActionKeys.GET_METRIC_GROUPS_SUCCESS:
 			return produce(state, draftState => {
-				draftState.metrics = action.payload;
+				draftState.metricGroups = action.payload;
+			});
+		case UiActionKeys.CALCULATE_CITY_SCORES_SUCCESS:
+			return produce(state, draftState => {
+				draftState.cities = action.payload;
 			});
 		case UiActionKeys.TOGGLE_CITY:
 			return produce(state, draftState => {
