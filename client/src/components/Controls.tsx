@@ -60,40 +60,6 @@ export const Controls: React.FC = () => {
 
 	const filterGroups: FilterGroup[] = [
 		{
-			label: 'Metrics',
-			options: metrics.map(m => ({ ...m, handleClick: () => {} })),
-			handleClick: () => setIsMetricsOpen(state => !state),
-			isOpen: isMetricsOpen,
-			renderFunc: (o: FilterOption) => (
-				<div style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '18px', margin: '4px 0' }}>
-					<div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-						<div style={{ display: 'flex', flexDirection: 'column', marginRight: '6px' }}>
-							<NumberInputButton
-								backgroundColor={'hsl(150, 75%, 70%)'}
-								onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
-								onClick={() => increment(o)}
-								style={{
-									borderTopLeftRadius: '6px',
-									borderTopRightRadius: '6px',
-								}}
-							></NumberInputButton>
-							<NumberInputButton
-								style={{
-									borderBottomLeftRadius: '6px',
-									borderBottomRightRadius: '6px',
-								}}
-								onClick={() => decrement(o)}
-								backgroundColor={'hsl(0, 75%, 70%)'}
-								onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
-							></NumberInputButton>
-						</div>
-						<div style={{ marginRight: '26px' }}>{metrics.find(m => m.label === o.label)!.multiplier}</div>
-						<div>{o.label}</div>
-					</div>
-				</div>
-			),
-		},
-		{
 			label: 'Cities',
 			options: cities.map(c => ({ ...c, handleClick: () => toggleCity(c) })),
 			handleClick: () => setIsCitiesOpen(state => !state),

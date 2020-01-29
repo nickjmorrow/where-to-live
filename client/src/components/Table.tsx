@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import React from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { useThemeContext, Theme } from '@nickjmorrow/react-component-library';
-import { getMetricGroups, getVisibleCitiesSelector } from 'reduxUtilities/uiSelectors';
-import { useSelector } from 'react-redux';
+import { getMetricGroups, getVisibleCitiesSelector, getMetricsSelector } from 'reduxUtilities/uiSelectors';
+import { useSelector, useDispatch } from 'react-redux';
 import { MetricGroup } from 'types/MetricGroup';
 import Flip from 'react-flip-move';
+import { NumberInputButton } from 'components/NumberInputButton';
+import { uiActions } from 'reduxUtilities/uiActions';
+import { Metric } from 'types/Metric';
 
 const getReactTableColumns = (metricGroups: MetricGroup[]) =>
 	metricGroups.map(mg => ({
@@ -23,6 +26,11 @@ const getReactTableColumns = (metricGroups: MetricGroup[]) =>
 const TableInternal: React.FC = () => {
 	const data = useSelector(getVisibleCitiesSelector);
 	const metricGroups = useSelector(getMetricGroups);
+	const metrics = useSelector(getMetricsSelector);
+
+	const formattedData = data.map(d => ({
+		...d,
+	}));
 
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
 		{
@@ -34,15 +42,57 @@ const TableInternal: React.FC = () => {
 
 	const theme = useThemeContext();
 
+	const getMetric = (index: number) => metrics[index];
+
+	const dispatch = useDispatch();
+
+	const decrement = (metric: Metric) => dispatch(uiActions.updateCounter.decrement(metric));
+	const increment = (metric: Metric) => dispatch(uiActions.updateCounter.increment(metric));
+
 	return (
 		<StyledTable {...getTableProps()} theme={theme}>
 			<Heading>
 				{headerGroups.map(headerGroup => (
 					<Row {...headerGroup.getHeaderGroupProps()}>
-						{headerGroup.headers.map(column => (
-							<Head {...column.getHeaderProps(column.getSortByToggleProps())}>
-								{column.render('Header')}
-								<span>{column.isSorted ? (column.isSorted ? ' 🔽' : ' 🔼') : ''}</span>
+						{headerGroup.headers.map((column, columnIndex) => (
+							<Head>
+								<div style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
+									<span style={{ width: 'max-content' }}>{column.render('Header')}</span>
+									{!column.columns && (
+										<div
+											style={{
+												display: 'flex',
+												flexDirection: 'row',
+												alignItems: 'center',
+												marginRight: '6px',
+											}}
+										>
+											<div
+												style={{ display: 'flex', flexDirection: 'column', marginRight: '6px' }}
+											>
+												<NumberInputButton
+													backgroundColor={'hsl(150, 75%, 70%)'}
+													onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
+													onClick={() => increment(getMetric(columnIndex))}
+													style={{
+														borderTopLeftRadius: '6px',
+														borderTopRightRadius: '6px',
+													}}
+												></NumberInputButton>
+												<NumberInputButton
+													style={{
+														borderBottomLeftRadius: '6px',
+														borderBottomRightRadius: '6px',
+													}}
+													onClick={() => decrement(getMetric(columnIndex))}
+													backgroundColor={'hsl(0, 75%, 70%)'}
+													onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
+												></NumberInputButton>
+											</div>
+											{getMetric(columnIndex).multiplier}
+										</div>
+									)}
+								</div>
 							</Head>
 						))}
 					</Row>
