@@ -6,6 +6,7 @@ import { CalculateButton } from 'components/CalculateButton';
 
 export const Main: React.FC = () => {
 	const theme = useThemeContext();
+
 	return (
 		<div
 			style={{
@@ -21,6 +22,7 @@ export const Main: React.FC = () => {
 			<Controls />
 			<Table />
 			<CalculateButton />
+			<div>{(window as any).test}</div>
 		</div>
 	);
 };

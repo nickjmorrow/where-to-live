@@ -24,6 +24,7 @@ export class CityProvider {
 			population: city.population,
 			happiness: city.happiness,
 			techJobs: city.techJobs,
+			isVisible: true,
 		};
 	}
 }

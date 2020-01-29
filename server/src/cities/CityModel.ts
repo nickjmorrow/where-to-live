@@ -5,4 +5,5 @@ export interface CityModel {
 	costOfLiving: number;
 	happiness: number;
 	techJobs: number;
+	isVisible: boolean;
 }
