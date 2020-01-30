@@ -40,7 +40,7 @@ const AppInternal: React.FC<RouteComponentProps> = () => {
 	return (
 		<div
 			className="App"
-			style={{ display: 'flex', justifyContent: 'center', minHeight: '100vh', marginTop: '300px' }}
+			style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}
 		>
 			<ThemeContext.Provider value={getThemeFromNewInputs(themeInputs)}>
 				<Main />

@@ -4,71 +4,82 @@ import styled from 'styled-components';
 import React from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { useThemeContext, Theme } from '@nickjmorrow/react-component-library';
-import { getMetricGroups, getVisibleCitiesSelector, getMetricsSelector } from 'reduxUtilities/uiSelectors';
+import { getMetricGroups, getVisibleCitiesSelector, getMetricsSelector, getCities } from 'reduxUtilities/uiSelectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { MetricGroup } from 'types/MetricGroup';
 import Flip from 'react-flip-move';
 import { NumberInputButton } from 'components/NumberInputButton';
 import { uiActions } from 'reduxUtilities/uiActions';
 import { Metric } from 'types/Metric';
+import { City } from 'types/City';
 
-const getReactTableColumns = (metricGroups: MetricGroup[]) =>
-	metricGroups.map(mg => ({
-		Header: mg.name,
-		columns: mg.metrics
-			.filter(m => m.isVisible)
-			.map(m => ({
-				Header: m.label,
-				accessor: m.accessor,
-			})),
-	}));
+interface ColumnModel {
+	Header: string;
+	accessor: string;
+}
 
 const TableInternal: React.FC = () => {
-	const data = useSelector(getVisibleCitiesSelector);
-	const metricGroups = useSelector(getMetricGroups);
+	const dispatch = useDispatch();
+	const theme = useThemeContext();
 	const metrics = useSelector(getMetricsSelector);
+	const data = useSelector(getCities);
 
-	const formattedData = data.map(d => ({
-		...d,
-	}));
-
-	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+	const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
 		{
-			columns: getReactTableColumns(metricGroups),
+			columns: metrics.map(m => ({ ...m, id: m.accessor })),
 			data,
 		},
 		useSortBy,
 	);
 
-	const theme = useThemeContext();
+	const toggleCityVisibility = (city: City) => dispatch(uiActions.toggleCity(city));
 
 	const getMetric = (index: number) => metrics[index];
-
-	const dispatch = useDispatch();
 
 	const decrement = (metric: Metric) => dispatch(uiActions.updateCounter.decrement(metric));
 	const increment = (metric: Metric) => dispatch(uiActions.updateCounter.increment(metric));
 
+	const [hoveredMetric, setHoveredMetric] = React.useState<Metric | null>(null);
+
 	return (
 		<StyledTable {...getTableProps()} theme={theme}>
 			<Heading>
-				{headerGroups.map(headerGroup => (
-					<Row {...headerGroup.getHeaderGroupProps()}>
-						{headerGroup.headers.map((column, columnIndex) => (
-							<Head>
-								<div style={{ display: 'flex', flexDirection: 'row-reverse', alignItems: 'center' }}>
-									<span style={{ width: 'max-content' }}>{column.render('Header')}</span>
-									{!column.columns && (
-										<div
-											style={{
-												display: 'flex',
-												flexDirection: 'row',
-												alignItems: 'center',
-												marginRight: '6px',
-											}}
-										>
+				<HeadRow>
+					{headers.map((column, columnIndex) => (
+						<Head>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'row-reverse',
+									alignItems: 'center',
+									margin: 'auto',
+									height: '40px',
+									minWidth: 'max-content',
+								}}
+								onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
+								onMouseLeave={() => {
+									if (getMetric(columnIndex) === hoveredMetric) {
+										setHoveredMetric(null);
+									}
+								}}
+							>
+								<span style={{ width: 'max-content' }}>{column.render('Header')}</span>
+								{!column.columns && getMetric(columnIndex).isIncludedInCalculation && (
+									<div
+										style={{
+											display: 'flex',
+											flexDirection: 'row',
+											alignItems: 'center',
+											marginRight: '6px',
+										}}
+									>
+										{getMetric(columnIndex).accessor === hoveredMetric?.accessor && (
 											<div
-												style={{ display: 'flex', flexDirection: 'column', marginRight: '6px' }}
+												style={{
+													display: 'flex',
+													flexDirection: 'column',
+													marginRight: '6px',
+												}}
 											>
 												<NumberInputButton
 													backgroundColor={'hsl(150, 75%, 70%)'}
@@ -89,41 +100,64 @@ const TableInternal: React.FC = () => {
 													onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
 												></NumberInputButton>
 											</div>
-											{getMetric(columnIndex).multiplier}
-										</div>
-									)}
-								</div>
-							</Head>
-						))}
-					</Row>
-				))}
+										)}
+									</div>
+								)}
+							</div>
+							{getMetric(columnIndex).label}{' '}
+							{getMetric(columnIndex).isIncludedInCalculation && getMetric(columnIndex).multiplier}
+						</Head>
+					))}
+				</HeadRow>
 			</Heading>
 
 			<Flip style={{ display: 'table-row-group', height: '600px' }} {...getTableBodyProps()}>
-				{rows
-					.sort((a, b) => (a.original.score > b.original.score ? -1 : 1))
-					.map((row, i) => {
-						prepareRow(row);
-						return (
-							<Row {...row.getRowProps()}>
-								{row.cells.map(cell => {
-									return <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>;
-								})}
-							</Row>
-						);
-					})}
+				{rows.sort(sortFunc).map((row, i) => {
+					prepareRow(row);
+					return (
+						<BodyRow
+							{...row.getRowProps()}
+							city={row.original}
+							theme={theme}
+							onClick={() => toggleCityVisibility(row.original)}
+						>
+							{row.cells.map(cell => {
+								return <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>;
+							})}
+						</BodyRow>
+					);
+				})}
 			</Flip>
 		</StyledTable>
 	);
+};
+
+const sortFunc = (aRow: any, bRow: any) => {
+	const a = aRow.original;
+	const b = bRow.original;
+	if (a.isVisible != b.isVisible) {
+		return a.isVisible ? -1 : 1;
+	}
+
+	return a.score > b.score ? -1 : 1;
 };
 
 const Styles = styled.div`
 	padding: 1rem;
 `;
 
-const Row = styled.tr`
+const Row = styled('tr')`
 	border: none;
 	display: table-row;
+`;
+
+const BodyRow = styled(Row)<{ city: City; theme: Theme }>`
+	color: ${p => (p.city.isVisible ? p.theme.colors.neutral.cs9 : p.theme.colors.neutral.cs6)};
+	cursor: pointer;
+`;
+
+const HeadRow = styled(Row)`
+	height: 60px;
 `;
 
 const Head = styled.th`
@@ -135,14 +169,17 @@ const Cell = styled.td`
 	border: none;
 	padding: 1rem;
 	display: table-cell;
+	width: max-content;
 `;
 
 const StyledTable = styled('table')<{ theme: Theme }>`
 	display: table;
 	width: 100%;
+	box-shadow: ${p => p.theme.boxShadow.bs2};
+	padding: ${p => p.theme.spacing.ss4};
 `;
 
-const Heading = styled.div`
+const Heading = styled.th`
 	display: table-header-group;
 	font-weight: bold;
 `;

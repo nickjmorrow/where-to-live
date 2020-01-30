@@ -11,7 +11,6 @@ export const Main: React.FC = () => {
 		<div
 			style={{
 				backgroundColor: theme.colors.background,
-				height: '100%',
 				margin: 0,
 				display: 'flex',
 				alignItems: 'flex-start',
@@ -19,7 +18,6 @@ export const Main: React.FC = () => {
 				flexDirection: 'row',
 			}}
 		>
-			<Controls />
 			<Table />
 			<CalculateButton />
 			<div>{(window as any).test}</div>
