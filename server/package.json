@@ -6,10 +6,10 @@
 	"scripts": {
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"build:watch": "ts-node-dev src/infrastructure/server.ts",
+		"build:watch": "ts-node-dev -r tsconfig-paths/register src/infrastructure/server.ts",
 		"prebuild": "rm -rf dist",
 		"build": "tsc",
-		"start": "ts-node src/infrastructure/server.ts",
+		"start": "ts-node -r tsconfig-paths/register src/infrastructure/server.ts",
 		"deploy": "heroku push origin master",
 		"format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
 		"lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
@@ -22,6 +22,7 @@
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
+		"@types/chalk": "^2.2.0",
 		"@types/circular-json": "^0.4.0",
 		"@types/compression": "0.0.36",
 		"@types/cors": "^2.8.4",
@@ -38,13 +39,16 @@
 		"sinon": "^7.3.1",
 		"ts-jest": "^24.0.0",
 		"tsc-watch": "^2.1.2",
+		"tsconfig-paths": "^3.9.0",
 		"tslint": "^5.16.0",
 		"typescript": "^3.3.3333"
 	},
 	"dependencies": {
 		"@typescript-eslint/eslint-plugin": "^2.16.0",
 		"@typescript-eslint/parser": "^2.16.0",
+		"apollo-server-express": "^2.9.16",
 		"axios": "^0.18.0",
+		"chalk": "^3.0.0",
 		"circular-json": "^0.5.9",
 		"compression": "^1.7.3",
 		"cors": "^2.8.5",

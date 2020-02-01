@@ -9,14 +9,15 @@ export class ScoreCalculator {
 		const validCities = cities.filter(c => c.isVisible);
 
 		const metricMaxes = scoreableMetrics.reduce<{ [P in keyof CityModel]: number }>((aggM, curM) => {
-			aggM[curM.accessor] = validCities.reduce((agg, c) => Math.max(agg, c[curM.accessor]), 0);
+			aggM[curM.accessor] = validCities.reduce((agg, c) => Math.max(agg, c[curM.accessor] as number), 0);
 			return aggM;
 		}, {} as { [P in keyof CityModel]: number });
 
 		const intermediateCityScores = cities.map(c => {
 			const score = c.isVisible
 				? scoreableMetrics.reduce((agg, cur) => {
-						const normalizedMetric = (cur.multiplier * c[cur.accessor]) / metricMaxes[cur.accessor];
+						const normalizedMetric =
+							(cur.multiplier * (c[cur.accessor] as number)) / metricMaxes[cur.accessor];
 						return agg + normalizedMetric;
 				  }, 0)
 				: 0;

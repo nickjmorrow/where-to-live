@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
-import { CityModel } from './CityModel';
-import { EntityManagerProvider } from '../infrastructure/EntityManagerProvider';
-import { City } from './entities/City';
+import { CityModel } from 'cities/CityModel';
+import { EntityManagerProvider } from 'infrastructure/EntityManagerProvider';
+import { City } from 'cities/entities/City';
 
 @injectable()
 export class CityProvider {
