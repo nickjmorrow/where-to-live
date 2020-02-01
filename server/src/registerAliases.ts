@@ -6,9 +6,12 @@ const getDirectories = (source: string): string[] =>
 		.filter((dirent: any) => dirent.isDirectory())
 		.map((dirent: any) => dirent.name);
 
-moduleAlias.addAliases(
+const getAliases = () =>
 	getDirectories('./src').reduce((agg, cur) => {
 		agg[cur] = `../${cur}`;
 		return agg;
-	}, {} as any),
-);
+	}, {} as any);
+
+console.log(getAliases());
+
+moduleAlias.addAliases(getAliases());

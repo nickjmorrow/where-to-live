@@ -46,33 +46,18 @@ const TableInternal: React.FC = () => {
 			<Heading>
 				<HeadRow>
 					{headers.map((column, columnIndex) => (
-						<Head>
-							<div
-								style={{
-									display: 'flex',
-									flexDirection: 'row-reverse',
-									alignItems: 'center',
-									margin: 'auto',
-									height: '40px',
-									minWidth: 'max-content',
-								}}
-								onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
-								onMouseLeave={() => {
-									if (getMetric(columnIndex) === hoveredMetric) {
-										setHoveredMetric(null);
-									}
-								}}
-							>
-								<span style={{ width: 'max-content' }}>{column.render('Header')}</span>
-								{!column.columns && getMetric(columnIndex).isIncludedInCalculation && (
-									<div
-										style={{
-											display: 'flex',
-											flexDirection: 'row',
-											alignItems: 'center',
-											marginRight: '6px',
-										}}
-									>
+						<Head
+							onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
+							onMouseLeave={() => {
+								if (getMetric(columnIndex) === hoveredMetric) {
+									setHoveredMetric(null);
+								}
+							}}
+						>
+							<div style={{ display: 'flex', alignItems: 'center', height: '60px' }}>
+								{getMetric(columnIndex).label}{' '}
+								{getMetric(columnIndex).isIncludedInCalculation && (
+									<div style={{ display: 'flex', alignItems: 'center', marginLeft: '16px' }}>
 										{getMetric(columnIndex).accessor === hoveredMetric?.accessor && (
 											<div
 												style={{
@@ -101,11 +86,10 @@ const TableInternal: React.FC = () => {
 												></NumberInputButton>
 											</div>
 										)}
+										{getMetric(columnIndex).multiplier}
 									</div>
 								)}
 							</div>
-							{getMetric(columnIndex).label}{' '}
-							{getMetric(columnIndex).isIncludedInCalculation && getMetric(columnIndex).multiplier}
 						</Head>
 					))}
 				</HeadRow>

@@ -22,6 +22,7 @@
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
+		"@types/chalk": "^2.2.0",
 		"@types/circular-json": "^0.4.0",
 		"@types/compression": "0.0.36",
 		"@types/cors": "^2.8.4",
@@ -44,7 +45,9 @@
 	"dependencies": {
 		"@typescript-eslint/eslint-plugin": "^2.16.0",
 		"@typescript-eslint/parser": "^2.16.0",
+		"apollo-server-express": "^2.9.16",
 		"axios": "^0.18.0",
+		"chalk": "^3.0.0",
 		"circular-json": "^0.5.9",
 		"compression": "^1.7.3",
 		"cors": "^2.8.5",

@@ -8,7 +8,6 @@ import { Main } from 'components/Main';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { RootState } from 'reduxUtilities/rootReducer';
 import { uiActions } from 'reduxUtilities/uiActions';
 import './App.css';
 

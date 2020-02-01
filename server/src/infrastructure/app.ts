@@ -4,10 +4,10 @@ import errorHandlers from './middleware/errorHandlers';
 import { routes } from './routes';
 import { applyMiddleware, applyRoutes } from './utils';
 
-export const router = express();
+export const app = express();
 
-applyMiddleware(middleware, router);
-applyRoutes(routes, router);
-applyMiddleware(errorHandlers, router);
+applyMiddleware(middleware, app);
+applyRoutes(routes, app);
+applyMiddleware(errorHandlers, app);
 
-router.use(express.json());
+app.use(express.json());
