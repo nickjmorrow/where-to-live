@@ -40,7 +40,6 @@
 		"sinon": "^7.3.1",
 		"ts-jest": "^24.0.0",
 		"tsc-watch": "^2.1.2",
-		"tsconfig-paths": "^3.9.0",
 		"tslint": "^5.16.0",
 		"typescript": "^3.7.5"
 	},
@@ -71,6 +70,7 @@
 		"prettier": "^1.19.1",
 		"prettier-eslint": "^9.0.1",
 		"reflect-metadata": "^0.1.13",
+		"tsconfig-paths": "^3.9.0",
 		"tsyringe": "^4.0.1",
 		"typeorm": "^0.2.14",
 		"winston": "^3.2.1"
