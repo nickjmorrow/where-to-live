@@ -1,9 +1,7 @@
-// import '../registerAliases';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-import http from 'http';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { app } from './app';
