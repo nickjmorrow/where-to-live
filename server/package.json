@@ -8,7 +8,7 @@
 		"test:watch": "jest --watch",
 		"build:watch": "ts-node-dev -r tsconfig-paths/register src/infrastructure/server.ts",
 		"prebuild": "rm -rf dist",
-		"build": "tsc",
+		"build": "",
 		"start": "ts-node -r tsconfig-paths/register src/infrastructure/server.ts",
 		"deploy": "heroku push origin master",
 		"format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
@@ -41,7 +41,7 @@
 		"tsc-watch": "^2.1.2",
 		"tsconfig-paths": "^3.9.0",
 		"tslint": "^5.16.0",
-		"typescript": "^3.3.3333"
+		"typescript": "^3.7.5"
 	},
 	"dependencies": {
 		"@typescript-eslint/eslint-plugin": "^2.16.0",

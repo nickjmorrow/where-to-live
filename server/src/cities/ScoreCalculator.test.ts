@@ -1,6 +1,7 @@
 import { ScoreCalculator } from 'cities/ScoreCalculator';
 import { CityModel } from 'cities/CityModel';
 import { Metric } from 'cities/Metric';
+import { object } from 'prop-types';
 
 const toCity = (obj: {}): CityModel => ({
 	cityId: 0,
@@ -9,9 +10,16 @@ const toCity = (obj: {}): CityModel => ({
 	happiness: 0,
 	techJobs: 0,
 	label: '',
+	isVisible: true,
 	...obj,
 });
-const toMetric = (obj: {}): Metric => ({ accessor: 'name', label: '', multiplier: 2, ...obj });
+const toMetric = (obj: {}): Metric => ({
+	accessor: 'population',
+	label: '',
+	multiplier: 2,
+	isIncludedInCalculation: true,
+	...obj,
+});
 
 describe('score calculator', () => {
 	it('works', () => {
@@ -39,9 +47,9 @@ describe('score calculator', () => {
 		].map(toCity);
 
 		const metrics: Metric[] = [
-			{ label: '', accessor: 'costOfLiving', multiplier: 2 },
-			{ label: '', accessor: 'population', multiplier: 1 },
-		];
+			{ label: '', accessor: 'costOfLiving' as const, multiplier: 2 },
+			{ label: '', accessor: 'population' as const, multiplier: 1 },
+		].map(obj => ({ isIncludedInCalculation: true, ...obj }));
 
 		const actual = new ScoreCalculator().calculateScores(cities, metrics);
 		const expected: typeof actual = [
