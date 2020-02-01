@@ -9,7 +9,7 @@
 		"build:watch": "ts-node-dev -r tsconfig-paths/register src/infrastructure/server.ts",
 		"prebuild": "rm -rf dist && npm install",
 		"postinstall": "npm i -g ts-node",
-		"build": "",
+		"build": "npm run format",
 		"prestart": "npm run build",
 		"start": "ts-node -r tsconfig-paths/register src/infrastructure/server.ts",
 		"deploy": "heroku push origin master",
