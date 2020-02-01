@@ -10,6 +10,7 @@
 		"prebuild": "rm -rf dist && npm install",
 		"postinstall": "npm i -g ts-node",
 		"build": "",
+		"prestart": "npm run build",
 		"start": "ts-node -r tsconfig-paths/register src/infrastructure/server.ts",
 		"deploy": "heroku push origin master",
 		"format": "prettier --write \"src/**/*.{js,ts,tsx}\"",
