@@ -1,5 +1,5 @@
 const developmentUrl = 'http://localhost:3001';
-const productionUrl = 'https://sleepy-tundra-74114.herokuapp.com/';
+const productionUrl = 'https://tranquil-shore-43790.herokuapp.com/';
 
 export const getBaseUrl = () => {
 	const env = process.env.NODE_ENV;
