@@ -41,71 +41,85 @@ const TableInternal: React.FC = () => {
 
 	const [hoveredMetric, setHoveredMetric] = React.useState<Metric | null>(null);
 
+	const ALWAYS_SHOW_PILLBOX = false;
+
 	return (
 		<StyledTable {...getTableProps()} theme={theme}>
 			<Heading>
 				<HeadRow>
 					{headers.map((column, columnIndex) => (
-						<Head>
+						<Head
+							onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
+							onMouseLeave={() => {
+								if (getMetric(columnIndex) === hoveredMetric) {
+									setHoveredMetric(null);
+								}
+							}}
+						>
 							<div
 								style={{
 									display: 'flex',
+									justifyContent: 'space-between',
+									minWidth: '150px',
 									flexDirection: 'row-reverse',
-									alignItems: 'center',
-									margin: 'auto',
-									height: '40px',
-									minWidth: 'max-content',
-								}}
-								onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
-								onMouseLeave={() => {
-									if (getMetric(columnIndex) === hoveredMetric) {
-										setHoveredMetric(null);
-									}
 								}}
 							>
-								<span style={{ width: 'max-content' }}>{column.render('Header')}</span>
-								{!column.columns && getMetric(columnIndex).isIncludedInCalculation && (
-									<div
-										style={{
-											display: 'flex',
-											flexDirection: 'row',
-											alignItems: 'center',
-											marginRight: '6px',
-										}}
-									>
-										{getMetric(columnIndex).accessor === hoveredMetric?.accessor && (
+								<div style={{ display: 'flex', alignItems: 'center', marginRight: '8px' }}>
+									{getMetric(columnIndex).label}{' '}
+									{getMetric(columnIndex).isIncludedInCalculation &&
+										getMetric(columnIndex).multiplier}
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'row-reverse',
+										alignItems: 'center',
+										height: '40px',
+										minWidth: 'max-content',
+									}}
+								>
+									{!column.columns &&
+										getMetric(columnIndex).isIncludedInCalculation &&
+										(getMetric(columnIndex).accessor === hoveredMetric?.accessor ||
+											ALWAYS_SHOW_PILLBOX) && (
 											<div
 												style={{
 													display: 'flex',
-													flexDirection: 'column',
-													marginRight: '6px',
+													flexDirection: 'row',
+													alignItems: 'center',
 												}}
 											>
-												<NumberInputButton
-													backgroundColor={'hsl(150, 75%, 70%)'}
-													onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
-													onClick={() => increment(getMetric(columnIndex))}
-													style={{
-														borderTopLeftRadius: '6px',
-														borderTopRightRadius: '6px',
-													}}
-												></NumberInputButton>
-												<NumberInputButton
-													style={{
-														borderBottomLeftRadius: '6px',
-														borderBottomRightRadius: '6px',
-													}}
-													onClick={() => decrement(getMetric(columnIndex))}
-													backgroundColor={'hsl(0, 75%, 70%)'}
-													onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
-												></NumberInputButton>
+												{
+													<div
+														style={{
+															display: 'flex',
+															flexDirection: 'column',
+														}}
+													>
+														<NumberInputButton
+															backgroundColor={'hsl(150, 75%, 70%)'}
+															onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
+															onClick={() => increment(getMetric(columnIndex))}
+															style={{
+																borderTopLeftRadius: '6px',
+																borderTopRightRadius: '6px',
+															}}
+														></NumberInputButton>
+														<NumberInputButton
+															style={{
+																borderBottomLeftRadius: '6px',
+																borderBottomRightRadius: '6px',
+															}}
+															onClick={() => decrement(getMetric(columnIndex))}
+															backgroundColor={'hsl(0, 75%, 70%)'}
+															onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
+														></NumberInputButton>
+													</div>
+												}
 											</div>
 										)}
-									</div>
-								)}
+								</div>
 							</div>
-							{getMetric(columnIndex).label}{' '}
-							{getMetric(columnIndex).isIncludedInCalculation && getMetric(columnIndex).multiplier}
 						</Head>
 					))}
 				</HeadRow>
@@ -149,6 +163,8 @@ const Styles = styled.div`
 const Row = styled('tr')`
 	border: none;
 	display: table-row;
+	background-color: white;
+	border-radius: 15px;
 `;
 
 const BodyRow = styled(Row)<{ city: City; theme: Theme }>`
@@ -170,13 +186,16 @@ const Cell = styled.td`
 	padding: 1rem;
 	display: table-cell;
 	width: max-content;
+	border: 1px solid white;
+	text-align: right;
 `;
 
 const StyledTable = styled('table')<{ theme: Theme }>`
 	display: table;
 	width: 100%;
-	box-shadow: ${p => p.theme.boxShadow.bs2};
-	padding: ${p => p.theme.spacing.ss4};
+	border-collapse: separate;
+	border-spacing: 0 ${p => p.theme.spacing.ss2};
+	width: max-content;
 `;
 
 const Heading = styled.th`

@@ -10,17 +10,19 @@ export const Main: React.FC = () => {
 	return (
 		<div
 			style={{
-				backgroundColor: theme.colors.background,
+				backgroundColor: theme.colors.neutral.cs2,
 				margin: 0,
 				display: 'flex',
-				alignItems: 'flex-start',
+				alignItems: 'center',
 				justifyContent: 'center',
-				flexDirection: 'row',
+				flexDirection: 'column',
+				height: '100vh',
 			}}
 		>
-			<Table />
-			<CalculateButton />
-			<div>{(window as any).test}</div>
+			<div>
+				<Table />
+				<CalculateButton />
+			</div>
 		</div>
 	);
 };

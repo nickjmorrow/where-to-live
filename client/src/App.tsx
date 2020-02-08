@@ -38,14 +38,9 @@ const AppInternal: React.FC<RouteComponentProps> = () => {
 	dispatch(uiActions.getMetricGroups.request());
 
 	return (
-		<div
-			className="App"
-			style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}
-		>
-			<ThemeContext.Provider value={getThemeFromNewInputs(themeInputs)}>
-				<Main />
-			</ThemeContext.Provider>
-		</div>
+		<ThemeContext.Provider value={getThemeFromNewInputs(themeInputs)}>
+			<Main />
+		</ThemeContext.Provider>
 	);
 };
 
