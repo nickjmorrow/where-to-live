@@ -55,6 +55,9 @@ const TableInternal: React.FC = () => {
 									setHoveredMetric(null);
 								}
 							}}
+							index={columnIndex}
+							numMetrics={metrics.length}
+							theme={theme}
 						>
 							<div
 								style={{
@@ -132,18 +135,11 @@ const TableInternal: React.FC = () => {
 				</HeadRow>
 			</Heading>
 			<div style={{ height: '400px', overflowY: 'scroll', marginTop: '16px' }}>
-				<StyledTable {...getTableProps()} theme={theme} style={{ marginTop: '-24px' }}>
+				<StyledTable {...getTableProps()} theme={theme} style={{ marginTop: '-32px' }}>
 					<Heading>
 						<HeadRow style={{ visibility: 'hidden', height: '0' }}>
 							{headers.map((column, columnIndex) => (
-								<Head
-									onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
-									onMouseLeave={() => {
-										if (getMetric(columnIndex) === hoveredMetric) {
-											setHoveredMetric(null);
-										}
-									}}
-								>
+								<HiddenHead>
 									<div
 										style={{
 											display: 'flex',
@@ -152,7 +148,7 @@ const TableInternal: React.FC = () => {
 											flexDirection: 'row-reverse',
 										}}
 									></div>
-								</Head>
+								</HiddenHead>
 							))}
 						</HeadRow>
 					</Heading>
@@ -167,8 +163,17 @@ const TableInternal: React.FC = () => {
 									theme={theme}
 									onClick={() => toggleCityVisibility(row.original)}
 								>
-									{row.cells.map(cell => {
-										return <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>;
+									{row.cells.map((cell, cellIndex) => {
+										return (
+											<Cell
+												index={cellIndex}
+												numMetrics={metrics.length}
+												theme={theme}
+												{...cell.getCellProps()}
+											>
+												{cell.render('Cell')}
+											</Cell>
+										);
 									})}
 								</BodyRow>
 							);
@@ -209,20 +214,48 @@ const HeadRow = styled(Row)`
 	height: 60px;
 `;
 
-const Head = styled.th`
+interface CellStyleArguments {
+	index: number;
+	numMetrics: number;
+	theme: Theme;
+}
+
+const Head = styled('th')<CellStyleArguments>`
 	padding: 0.5rem;
 	min-width: 120px;
 	background-color: white;
+	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
 
-const Cell = styled.td`
+const HiddenHead = styled.th`
+	padding: 0.5rem;
+`;
+
+const Cell = styled('td')<{ cellIndex: number; numMetrics: number; theme: Theme }>`
 	border: none;
 	padding: 1rem;
 	display: table-cell;
 	width: max-content;
 	text-align: right;
 	background-color: white;
+	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
+
+const getCellStyle = ({ index, numMetrics, theme }: CellStyleArguments): string | void => {
+	if (index === 0) {
+		return `
+			border-top-left-radius: ${theme.border.borderRadius.br1};
+			border-bottom-left-radius: ${theme.border.borderRadius.br1};
+		`;
+	}
+
+	if (index === numMetrics - 1) {
+		return `
+			border-top-right-radius: ${theme.border.borderRadius.br1};
+			border-bottom-right-radius: ${theme.border.borderRadius.br1};
+		`;
+	}
+};
 
 const StyledTable = styled('table')<{ theme: Theme }>`
 	display: table;
@@ -235,21 +268,6 @@ const StyledTable = styled('table')<{ theme: Theme }>`
 const Heading = styled.th`
 	display: table-header-group;
 	font-weight: bold;
-`;
-
-const Body = styled('tbody')<{ theme: Theme }>`
-	display: table-row-group;
-	tr:nth-child(odd) {
-		background-color: ${p => p.theme.colors.neutral.cs3};
-	}
-	td:last-child {
-		border-bottom-right-radius: ${p => p.theme.border.borderRadius.br1};
-		border-top-right-radius: ${p => p.theme.border.borderRadius.br1};
-	}
-	td:first-child {
-		border-bottom-left-radius: ${p => p.theme.border.borderRadius.br1};
-		border-top-left-radius: ${p => p.theme.border.borderRadius.br1};
-	}
 `;
 
 export const Table = () => (

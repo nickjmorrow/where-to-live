@@ -30,6 +30,11 @@ const themeInputs: ArgumentType<typeof updateThemeInputs>[0] = {
 		},
 	},
 	defaultShowBoxShadow: false,
+	border: {
+		borderRadius: {
+			br1: 8,
+		},
+	},
 };
 
 const AppInternal: React.FC<RouteComponentProps> = () => {
