@@ -1,7 +1,5 @@
-import { AppState } from 'reduxUtilities/AppState';
 import { createSelector } from 'reselect';
 import { RootState } from 'reduxUtilities/rootReducer';
-import { metricGroups } from 'components/metricGroups';
 import { Metric } from 'types/Metric';
 
 const getUiSlice = (state: RootState) => state.ui;

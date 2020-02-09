@@ -15,6 +15,20 @@
 
 [Fitness Club Statics App](https://dribbble.com/shots/5966595-Fitness-Club-Statistics-App)
 
-[Booking App](https://dribbble.com/shots/6479938-Booking-App-The-concept-with-booking-feature)
+[Table, row spacing, neutral color scheme](https://dribbble.com/shots/7373923-TheHub-Startup-Home)
 
-[Booking flight](https://dribbble.com/shots/5401352-Booking-flight-with-active-interface)
+[Row hover state](https://dribbble.com/shots/6802141-Applicants-Page)
+
+[Table](https://dribbble.com/shots/7128143-Booking-platform-for-scuba-diving-industry)
+
+[Table](https://dribbble.com/shots/3963594-Form-builder-application)
+
+[Table](https://dribbble.com/shots/9532767-Hire-Ground-Dashboard)
+
+[Table](https://dribbble.com/shots/6773387-Sales-orders-list)
+
+[Table](https://dribbble.com/shots/6122229-Banking-App-Concept)
+
+[Table](https://dribbble.com/shots/9710906--Advanced-Search-Filters-Fund-Comparison)
+
+

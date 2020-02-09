@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useTable, useSortBy } from 'react-table';
-import { useThemeContext, Theme } from '@nickjmorrow/react-component-library';
+import { useThemeContext, Theme, Fade } from '@nickjmorrow/react-component-library';
 import { getMetricGroups, getVisibleCitiesSelector, getMetricsSelector, getCities } from 'reduxUtilities/uiSelectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { MetricGroup } from 'types/MetricGroup';
@@ -44,7 +44,7 @@ const TableInternal: React.FC = () => {
 	const ALWAYS_SHOW_PILLBOX = false;
 
 	return (
-		<StyledTable {...getTableProps()} theme={theme}>
+		<div>
 			<Heading>
 				<HeadRow>
 					{headers.map((column, columnIndex) => (
@@ -59,7 +59,7 @@ const TableInternal: React.FC = () => {
 							<div
 								style={{
 									display: 'flex',
-									justifyContent: 'space-between',
+									justifyContent: 'flex-start',
 									minWidth: '150px',
 									flexDirection: 'row-reverse',
 								}}
@@ -78,10 +78,15 @@ const TableInternal: React.FC = () => {
 										minWidth: 'max-content',
 									}}
 								>
-									{!column.columns &&
-										getMetric(columnIndex).isIncludedInCalculation &&
-										(getMetric(columnIndex).accessor === hoveredMetric?.accessor ||
-											ALWAYS_SHOW_PILLBOX) && (
+									{
+										<Fade
+											in={
+												!column.columns &&
+												getMetric(columnIndex).isIncludedInCalculation &&
+												(getMetric(columnIndex).accessor === hoveredMetric?.accessor ||
+													ALWAYS_SHOW_PILLBOX)
+											}
+										>
 											<div
 												style={{
 													display: 'flex',
@@ -94,6 +99,7 @@ const TableInternal: React.FC = () => {
 														style={{
 															display: 'flex',
 															flexDirection: 'column',
+															marginRight: '8px',
 														}}
 													>
 														<NumberInputButton
@@ -117,32 +123,60 @@ const TableInternal: React.FC = () => {
 													</div>
 												}
 											</div>
-										)}
+										</Fade>
+									}
 								</div>
 							</div>
 						</Head>
 					))}
 				</HeadRow>
 			</Heading>
+			<div style={{ height: '400px', overflowY: 'scroll', marginTop: '16px' }}>
+				<StyledTable {...getTableProps()} theme={theme} style={{ marginTop: '-24px' }}>
+					<Heading>
+						<HeadRow style={{ visibility: 'hidden', height: '0' }}>
+							{headers.map((column, columnIndex) => (
+								<Head
+									onMouseEnter={() => setHoveredMetric(getMetric(columnIndex))}
+									onMouseLeave={() => {
+										if (getMetric(columnIndex) === hoveredMetric) {
+											setHoveredMetric(null);
+										}
+									}}
+								>
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'flex-start',
+											minWidth: '150px',
+											flexDirection: 'row-reverse',
+										}}
+									></div>
+								</Head>
+							))}
+						</HeadRow>
+					</Heading>
 
-			<Flip style={{ display: 'table-row-group', height: '600px' }} {...getTableBodyProps()}>
-				{rows.sort(sortFunc).map((row, i) => {
-					prepareRow(row);
-					return (
-						<BodyRow
-							{...row.getRowProps()}
-							city={row.original}
-							theme={theme}
-							onClick={() => toggleCityVisibility(row.original)}
-						>
-							{row.cells.map(cell => {
-								return <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>;
-							})}
-						</BodyRow>
-					);
-				})}
-			</Flip>
-		</StyledTable>
+					<Flip style={{ display: 'table-row-group' }} {...getTableBodyProps()}>
+						{rows.sort(sortFunc).map((row, i) => {
+							prepareRow(row);
+							return (
+								<BodyRow
+									{...row.getRowProps()}
+									city={row.original}
+									theme={theme}
+									onClick={() => toggleCityVisibility(row.original)}
+								>
+									{row.cells.map(cell => {
+										return <Cell {...cell.getCellProps()}>{cell.render('Cell')}</Cell>;
+									})}
+								</BodyRow>
+							);
+						})}
+					</Flip>
+				</StyledTable>
+			</div>
+		</div>
 	);
 };
 
@@ -163,7 +197,6 @@ const Styles = styled.div`
 const Row = styled('tr')`
 	border: none;
 	display: table-row;
-	background-color: white;
 	border-radius: 15px;
 `;
 
@@ -179,6 +212,7 @@ const HeadRow = styled(Row)`
 const Head = styled.th`
 	padding: 0.5rem;
 	min-width: 120px;
+	background-color: white;
 `;
 
 const Cell = styled.td`
@@ -186,8 +220,8 @@ const Cell = styled.td`
 	padding: 1rem;
 	display: table-cell;
 	width: max-content;
-	border: 1px solid white;
 	text-align: right;
+	background-color: white;
 `;
 
 const StyledTable = styled('table')<{ theme: Theme }>`
