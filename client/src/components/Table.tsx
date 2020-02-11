@@ -98,6 +98,7 @@ const TableInternal: React.FC = () => {
 													getMetric(columnIndex).accessor === hoveredMetric.accessor) ||
 													ALWAYS_SHOW_PILLBOX)
 											}
+											unmountOnExit={true}
 										>
 											<div
 												style={{
@@ -117,7 +118,10 @@ const TableInternal: React.FC = () => {
 														<NumberInputButton
 															backgroundColor={'hsl(150, 75%, 70%)'}
 															onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
-															onClick={() => increment(getMetric(columnIndex))}
+															onClick={e => {
+																e.stopPropagation();
+																increment(getMetric(columnIndex));
+															}}
 															style={{
 																borderTopLeftRadius: '6px',
 																borderTopRightRadius: '6px',
@@ -128,7 +132,10 @@ const TableInternal: React.FC = () => {
 																borderBottomLeftRadius: '6px',
 																borderBottomRightRadius: '6px',
 															}}
-															onClick={() => decrement(getMetric(columnIndex))}
+															onClick={e => {
+																e.stopPropagation();
+																decrement(getMetric(columnIndex));
+															}}
 															backgroundColor={'hsl(0, 75%, 70%)'}
 															onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
 														></NumberInputButton>
@@ -162,7 +169,7 @@ const TableInternal: React.FC = () => {
 						</HiddenHeadRow>
 					</Heading>
 
-					<Flip style={{ display: 'table-row-group' } as Flip.Styles} {...getTableBodyProps()}>
+					<Flip style={{ display: 'table-row-group' } as any} {...getTableBodyProps()}>
 						{rows.sort(sortFunc(sortedMetric)).map((row, i) => {
 							prepareRow(row);
 							return (
@@ -252,7 +259,7 @@ interface CellStyleArguments {
 }
 
 const Head = styled('th')<CellStyleArguments>`
-	padding: 0.5rem;
+	padding: 8px;
 	min-width: max-content;
 	background-color: white;
 	cursor: pointer;

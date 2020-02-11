@@ -2,14 +2,14 @@ import { MetricGroup } from 'cities/MetricGroup';
 import { Metric } from 'cities/Metric';
 
 // TODO: should not need type assertion
-
+// TODO: get rid of any
 export const metricGroups: MetricGroup[] = [
 	{
 		name: 'City',
 		metrics: [
 			{
 				label: 'Name',
-				accessor: 'label',
+				accessor: 'label' as any,
 				textAlignment: 'left',
 				mask: '999,999,999',
 				calculationConfig: {
@@ -18,7 +18,7 @@ export const metricGroups: MetricGroup[] = [
 			},
 			{
 				label: 'Score',
-				accessor: 'score',
+				accessor: 'score' as any,
 				textAlignment: 'right',
 				mask: '999,999,999',
 				calculationConfig: {

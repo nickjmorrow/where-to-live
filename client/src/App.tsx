@@ -28,6 +28,9 @@ const themeInputs: ArgumentType<typeof updateThemeInputs>[0] = {
 			middleLightness: 47,
 			saturation: 90,
 		},
+		neutral: {
+			lightnessDecrement: 15,
+		},
 	},
 	defaultShowBoxShadow: false,
 	border: {
