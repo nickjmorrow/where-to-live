@@ -3,6 +3,8 @@ import { Table } from 'components/Table';
 import { useThemeContext } from '@nickjmorrow/react-component-library';
 import { Controls } from 'components/Controls';
 import { CalculateButton } from 'components/CalculateButton';
+import { useSelector } from 'react-redux';
+import { selectors } from 'reduxUtilities/uiSelectors';
 
 export const Main: React.FC = () => {
 	const theme = useThemeContext();

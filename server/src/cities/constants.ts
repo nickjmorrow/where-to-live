@@ -1,42 +1,8 @@
-import { Metric } from 'cities/Metric';
 import { MetricGroup } from 'cities/MetricGroup';
-
-export const metrics: Metric[] = [
-	{
-		isIncludedInCalculation: true,
-		label: 'Cost of Living',
-		accessor: 'costOfLiving',
-		multiplier: 1,
-		textAlignment: 'right',
-		mask: '999,999,999',
-	},
-	{
-		isIncludedInCalculation: true,
-		label: 'Happiness',
-		accessor: 'happiness',
-		multiplier: 1,
-		textAlignment: 'right',
-		mask: '999,999,999',
-	},
-	{
-		isIncludedInCalculation: true,
-		label: 'Population',
-		accessor: 'population',
-		multiplier: 1,
-		textAlignment: 'right',
-		mask: '999,999,999',
-	},
-	{
-		isIncludedInCalculation: true,
-		label: 'Tech Jobs',
-		accessor: 'techJobs',
-		multiplier: 1,
-		textAlignment: 'right',
-		mask: '999,999,999',
-	},
-];
+import { Metric } from 'cities/Metric';
 
 // TODO: should not need type assertion
+
 export const metricGroups: MetricGroup[] = [
 	{
 		name: 'City',
@@ -44,16 +10,20 @@ export const metricGroups: MetricGroup[] = [
 			{
 				label: 'Name',
 				accessor: 'label',
-				isIncludedInCalculation: false,
 				textAlignment: 'left',
 				mask: '999,999,999',
+				calculationConfig: {
+					isIncludedInCalculation: false,
+				},
 			},
 			{
 				label: 'Score',
 				accessor: 'score',
-				isIncludedInCalculation: false,
 				textAlignment: 'right',
 				mask: '999,999,999',
+				calculationConfig: {
+					isIncludedInCalculation: false,
+				},
 			},
 		],
 	},
@@ -63,16 +33,28 @@ export const metricGroups: MetricGroup[] = [
 			{
 				label: 'Cost of Living',
 				accessor: 'costOfLiving',
-				isIncludedInCalculation: true,
 				textAlignment: 'right',
 				mask: '999,999,999',
+				calculationConfig: {
+					sortType: {
+						order: 'ascending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
 			},
 			{
 				label: 'Tech Jobs',
 				accessor: 'techJobs',
-				isIncludedInCalculation: true,
 				textAlignment: 'right',
 				mask: '999,999,999',
+				calculationConfig: {
+					sortType: {
+						order: 'descending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
 			},
 		],
 	},
@@ -82,17 +64,31 @@ export const metricGroups: MetricGroup[] = [
 			{
 				label: 'Happiness',
 				accessor: 'happiness',
-				isIncludedInCalculation: true,
 				textAlignment: 'right',
 				mask: '999,999,999',
+				calculationConfig: {
+					sortType: {
+						order: 'descending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
 			},
 			{
 				label: 'Population',
 				accessor: 'population',
-				isIncludedInCalculation: true,
 				textAlignment: 'right',
 				mask: '999,999,999',
+				calculationConfig: {
+					sortType: {
+						order: 'descending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
 			},
 		],
 	},
-].map(mg => ({ ...mg, metrics: mg.metrics.map(m => ({ ...m, isVisible: true, multiplier: 1 })) })) as MetricGroup[];
+];
+
+export const metrics: Metric[] = metricGroups.reduce<Metric[]>((agg, cur) => [...agg, ...cur.metrics], []);

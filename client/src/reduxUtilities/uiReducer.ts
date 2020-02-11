@@ -10,10 +10,15 @@ export type UiState = Readonly<typeof initialState>;
 const initialState = {
 	cities: [] as City[],
 	metricGroups: [] as MetricGroup[],
+	isCalculating: false,
 };
 
 export const uiReducer = (state: UiState = initialState, action: ActionType<typeof uiActions>) => {
 	switch (action.type) {
+		case UiActionKeys.CALCULATE_CITY_SCORES:
+			return produce(state, draftState => {
+				draftState.isCalculating = true;
+			});
 		case UiActionKeys.GET_CITIES_SUCCESS:
 			return produce(state, draftState => {
 				draftState.cities = action.payload;
@@ -25,6 +30,7 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 		case UiActionKeys.CALCULATE_CITY_SCORES_SUCCESS:
 			return produce(state, draftState => {
 				draftState.cities = action.payload;
+				draftState.isCalculating = false;
 			});
 		case UiActionKeys.TOGGLE_CITY:
 			return produce(state, draftState => {
@@ -38,8 +44,8 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 			return produce(state, draftState => {
 				draftState.metricGroups.forEach((mg: MetricGroup) => {
 					mg.metrics.forEach((m: Metric) => {
-						if (m.label === action.payload.label) {
-							m.multiplier += 1;
+						if (m.label === action.payload.label && m.calculationConfig.isIncludedInCalculation) {
+							m.calculationConfig.multiplier += 1;
 						}
 					});
 				});
@@ -48,8 +54,8 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 			return produce(state, draftState => {
 				draftState.metricGroups.forEach((mg: MetricGroup) => {
 					mg.metrics.forEach((m: Metric) => {
-						if (m.label === action.payload.label) {
-							m.multiplier -= 1;
+						if (m.label === action.payload.label && m.calculationConfig.isIncludedInCalculation) {
+							m.calculationConfig.multiplier -= 1;
 						}
 					});
 				});

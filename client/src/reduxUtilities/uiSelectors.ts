@@ -13,3 +13,7 @@ export const getMetricGroups = (state: RootState) => getUiSlice(state).metricGro
 export const getMetricsSelector = createSelector(getMetricGroups, metricGroups => {
 	return metricGroups.reduce<Metric[]>((agg, cur) => [...agg, ...cur.metrics], []);
 });
+
+export const selectors = {
+	getIsCalculating: (state: RootState) => getUiSlice(state).isCalculating,
+};

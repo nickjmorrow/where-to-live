@@ -7,7 +7,7 @@ import Flip from 'react-flip-move';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSortBy, useTable } from 'react-table';
 import { uiActions } from 'reduxUtilities/uiActions';
-import { getCities, getMetricsSelector } from 'reduxUtilities/uiSelectors';
+import { getCities, getMetricsSelector, selectors } from 'reduxUtilities/uiSelectors';
 import styled from 'styled-components';
 import { City } from 'types/City';
 import { Metric } from 'types/Metric';
@@ -72,8 +72,8 @@ const TableInternal: React.FC = () => {
 										}}
 									>
 										{getMetric(columnIndex).label}{' '}
-										{getMetric(columnIndex).isIncludedInCalculation &&
-											getMetric(columnIndex).multiplier}
+										{getMetric(columnIndex).calculationConfig.isIncludedInCalculation &&
+											getMetric(columnIndex).calculationConfig.multiplier}
 									</Typography>
 								</div>
 								<div
@@ -89,7 +89,7 @@ const TableInternal: React.FC = () => {
 										<Fade
 											in={
 												!column.columns &&
-												getMetric(columnIndex).isIncludedInCalculation &&
+												getMetric(columnIndex).calculationConfig.isIncludedInCalculation &&
 												(getMetric(columnIndex).accessor === hoveredMetric?.accessor ||
 													ALWAYS_SHOW_PILLBOX)
 											}
