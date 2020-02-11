@@ -1,10 +1,12 @@
 export interface Metric {
 	label: string;
-	accessor: string;
+	accessor: Accessor;
 	mask: string;
 	textAlignment: 'left' | 'right';
 	calculationConfig: CalculationConfig;
 }
+
+type Accessor = 'costOfLiving' | 'happiness' | 'population' | 'techJobs';
 
 type SortType = { order: 'ascending' } | { order: 'descending' };
 

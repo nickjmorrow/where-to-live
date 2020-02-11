@@ -17,6 +17,7 @@ export enum UiActionKeys {
 	CALCULATE_CITY_SCORES = 'CALCULATE_CITY_SCORES',
 	CALCULATE_CITY_SCORES_SUCCESS = 'CALCULATE_CITY_SCORES_SUCCESS',
 	CALCULATE_CITY_SCORES_FAILURE = 'CALCULATE_CITY_SCORES_FAILURE',
+	SORT_METRIC = 'SORT_METRIC',
 }
 
 const getCities = {
@@ -49,10 +50,13 @@ const calculateCityScores = {
 	failure: (message: string) => action(UiActionKeys.CALCULATE_CITY_SCORES_FAILURE, message),
 };
 
+const sortMetric = (metric: Metric) => action(UiActionKeys.SORT_METRIC, metric);
+
 export const uiActions = {
 	getCities,
 	toggleCity,
 	updateCounter,
 	getMetricGroups,
 	calculateCityScores,
+	sortMetric,
 };

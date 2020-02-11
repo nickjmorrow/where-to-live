@@ -5,19 +5,21 @@ import { NumberInputButton } from 'components/NumberInputButton';
 import React from 'react';
 import Flip from 'react-flip-move';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSortBy, useTable } from 'react-table';
+import { useSortBy, useTable, Row as RowType } from 'react-table';
 import { uiActions } from 'reduxUtilities/uiActions';
 import { getCities, getMetricsSelector, selectors } from 'reduxUtilities/uiSelectors';
 import styled from 'styled-components';
 import { City } from 'types/City';
 import { Metric } from 'types/Metric';
 import format from 'number-format.js';
+import { UiState } from 'reduxUtilities/uiReducer';
 
 const TableInternal: React.FC = () => {
 	const dispatch = useDispatch();
 	const theme = useThemeContext();
 	const metrics = useSelector(getMetricsSelector);
 	const data = useSelector(getCities);
+	const sortedMetric = useSelector(selectors.getSortedMetric);
 
 	const { getTableProps, getTableBodyProps, headers, rows, prepareRow } = useTable(
 		{
@@ -33,6 +35,7 @@ const TableInternal: React.FC = () => {
 
 	const decrement = (metric: Metric) => dispatch(uiActions.updateCounter.decrement(metric));
 	const increment = (metric: Metric) => dispatch(uiActions.updateCounter.increment(metric));
+	const sortMetric = (metric: Metric) => dispatch(uiActions.sortMetric(metric));
 
 	const [hoveredMetric, setHoveredMetric] = React.useState<Metric | null>(null);
 
@@ -50,6 +53,7 @@ const TableInternal: React.FC = () => {
 									setHoveredMetric(null);
 								}
 							}}
+							onClick={() => sortMetric(getMetric(columnIndex))}
 							index={columnIndex}
 							numMetrics={metrics.length}
 							theme={theme}
@@ -57,7 +61,7 @@ const TableInternal: React.FC = () => {
 							<div
 								style={{
 									display: 'flex',
-									justifyContent: 'flex-start',
+									justifyContent: getContentJustification(getMetric(columnIndex)),
 									minWidth: '150px',
 									flexDirection: 'row-reverse',
 								}}
@@ -90,7 +94,8 @@ const TableInternal: React.FC = () => {
 											in={
 												!column.columns &&
 												getMetric(columnIndex).calculationConfig.isIncludedInCalculation &&
-												(getMetric(columnIndex).accessor === hoveredMetric?.accessor ||
+												((hoveredMetric &&
+													getMetric(columnIndex).accessor === hoveredMetric.accessor) ||
 													ALWAYS_SHOW_PILLBOX)
 											}
 										>
@@ -139,9 +144,9 @@ const TableInternal: React.FC = () => {
 				</HeadRow>
 			</Heading>
 			<div style={{ height: '400px', overflowY: 'scroll', marginTop: '16px' }}>
-				<StyledTable {...getTableProps()} theme={theme} style={{ marginTop: '-32px' }}>
+				<StyledTable {...getTableProps()} theme={theme}>
 					<Heading>
-						<HeadRow style={{ visibility: 'hidden', height: '0' }}>
+						<HiddenHeadRow>
 							{headers.map((column, columnIndex) => (
 								<HiddenHead>
 									<div
@@ -154,11 +159,11 @@ const TableInternal: React.FC = () => {
 									></div>
 								</HiddenHead>
 							))}
-						</HeadRow>
+						</HiddenHeadRow>
 					</Heading>
 
-					<Flip style={{ display: 'table-row-group' }} {...getTableBodyProps()}>
-						{rows.sort(sortFunc).map((row, i) => {
+					<Flip style={{ display: 'table-row-group' } as Flip.Styles} {...getTableBodyProps()}>
+						{rows.sort(sortFunc(sortedMetric)).map((row, i) => {
 							prepareRow(row);
 							return (
 								<BodyRow
@@ -190,14 +195,30 @@ const TableInternal: React.FC = () => {
 	);
 };
 
-const sortFunc = (aRow: any, bRow: any) => {
+const sortFunc = (sortedMetric: UiState['sortedMetric']) => (aRow: RowType<City>, bRow: RowType<City>) => {
 	const a = aRow.original;
 	const b = bRow.original;
 	if (a.isVisible != b.isVisible) {
 		return a.isVisible ? -1 : 1;
 	}
 
-	return a.score > b.score ? -1 : 1;
+	const comparison =
+		sortedMetric.order === 'ascending'
+			? a[sortedMetric.accessor] > b[sortedMetric.accessor]
+			: a[sortedMetric.accessor] < b[sortedMetric.accessor];
+
+	return comparison ? -1 : 1;
+};
+
+const getContentJustification = (metric: Metric) => {
+	switch (metric.textAlignment) {
+		case 'left':
+			return 'flex-end';
+		case 'right':
+			return 'flex-start';
+		default:
+			throw new Error('Unexpected text justification.');
+	}
 };
 
 const Styles = styled.div`
@@ -219,6 +240,11 @@ const HeadRow = styled(Row)`
 	height: 60px;
 `;
 
+const HiddenHeadRow = styled(HeadRow)`
+	visbility: hidden;
+	height: 0;
+`;
+
 interface CellStyleArguments {
 	index: number;
 	numMetrics: number;
@@ -229,6 +255,7 @@ const Head = styled('th')<CellStyleArguments>`
 	padding: 0.5rem;
 	min-width: max-content;
 	background-color: white;
+	cursor: pointer;
 	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
 
@@ -267,6 +294,7 @@ const StyledTable = styled('table')<{ theme: Theme }>`
 	display: table;
 	width: 100%;
 	border-collapse: separate;
+	margin-top: -${p => p.theme.spacing.ss8};
 	border-spacing: 0 ${p => p.theme.spacing.ss2};
 	width: max-content;
 `;

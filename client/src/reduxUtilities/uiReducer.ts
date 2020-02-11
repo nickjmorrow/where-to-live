@@ -7,10 +7,17 @@ import { Metric } from 'types/Metric';
 
 export type UiState = Readonly<typeof initialState>;
 
+// TODO: centralize, this is used in multiple places I think
+type SortOrder = 'ascending' | 'descending';
+
 const initialState = {
 	cities: [] as City[],
 	metricGroups: [] as MetricGroup[],
 	isCalculating: false,
+	sortedMetric: {
+		accessor: 'score' as Metric['accessor'],
+		order: 'descending' as SortOrder,
+	},
 };
 
 export const uiReducer = (state: UiState = initialState, action: ActionType<typeof uiActions>) => {
@@ -60,7 +67,24 @@ export const uiReducer = (state: UiState = initialState, action: ActionType<type
 					});
 				});
 			});
+		case UiActionKeys.SORT_METRIC:
+			return produce(state, draftState => {
+				if (state.sortedMetric.accessor === action.payload.accessor) {
+					draftState.sortedMetric.order = getToggledSortOrder(state.sortedMetric.order);
+					return;
+				}
+				draftState.sortedMetric.accessor = action.payload.accessor;
+			});
 		default:
 			return state;
+	}
+};
+
+const getToggledSortOrder = (order: SortOrder): SortOrder => {
+	switch (order) {
+		case 'ascending':
+			return 'descending';
+		case 'descending':
+			return 'ascending';
 	}
 };

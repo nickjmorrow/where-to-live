@@ -16,4 +16,5 @@ export const getMetricsSelector = createSelector(getMetricGroups, metricGroups =
 
 export const selectors = {
 	getIsCalculating: (state: RootState) => getUiSlice(state).isCalculating,
+	getSortedMetric: (state: RootState) => getUiSlice(state).sortedMetric,
 };
