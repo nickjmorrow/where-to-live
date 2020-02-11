@@ -1,22 +1,17 @@
 // @ts-nocheck
 
-import styled from 'styled-components';
-import React from 'react';
-import { useTable, useSortBy } from 'react-table';
-import { useThemeContext, Theme, Fade } from '@nickjmorrow/react-component-library';
-import { getMetricGroups, getVisibleCitiesSelector, getMetricsSelector, getCities } from 'reduxUtilities/uiSelectors';
-import { useSelector, useDispatch } from 'react-redux';
-import { MetricGroup } from 'types/MetricGroup';
-import Flip from 'react-flip-move';
+import { Fade, Theme, useThemeContext, Typography } from '@nickjmorrow/react-component-library';
 import { NumberInputButton } from 'components/NumberInputButton';
+import React from 'react';
+import Flip from 'react-flip-move';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSortBy, useTable } from 'react-table';
 import { uiActions } from 'reduxUtilities/uiActions';
-import { Metric } from 'types/Metric';
+import { getCities, getMetricsSelector } from 'reduxUtilities/uiSelectors';
+import styled from 'styled-components';
 import { City } from 'types/City';
-
-interface ColumnModel {
-	Header: string;
-	accessor: string;
-}
+import { Metric } from 'types/Metric';
+import format from 'number-format.js';
 
 const TableInternal: React.FC = () => {
 	const dispatch = useDispatch();
@@ -67,10 +62,19 @@ const TableInternal: React.FC = () => {
 									flexDirection: 'row-reverse',
 								}}
 							>
-								<div style={{ display: 'flex', alignItems: 'center', marginRight: '8px' }}>
-									{getMetric(columnIndex).label}{' '}
-									{getMetric(columnIndex).isIncludedInCalculation &&
-										getMetric(columnIndex).multiplier}
+								<div style={{ display: 'flex', alignItems: 'center' }}>
+									<Typography
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											marginRight: '8px',
+											width: 'max-content',
+										}}
+									>
+										{getMetric(columnIndex).label}{' '}
+										{getMetric(columnIndex).isIncludedInCalculation &&
+											getMetric(columnIndex).multiplier}
+									</Typography>
 								</div>
 								<div
 									style={{
@@ -169,9 +173,10 @@ const TableInternal: React.FC = () => {
 												index={cellIndex}
 												numMetrics={metrics.length}
 												theme={theme}
+												metric={getMetric(cellIndex)}
 												{...cell.getCellProps()}
 											>
-												{cell.render('Cell')}
+												<Typography>{format('#,##0.####', cell.value)}</Typography>
 											</Cell>
 										);
 									})}
@@ -222,7 +227,7 @@ interface CellStyleArguments {
 
 const Head = styled('th')<CellStyleArguments>`
 	padding: 0.5rem;
-	min-width: 120px;
+	min-width: max-content;
 	background-color: white;
 	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
@@ -231,13 +236,14 @@ const HiddenHead = styled.th`
 	padding: 0.5rem;
 `;
 
-const Cell = styled('td')<{ cellIndex: number; numMetrics: number; theme: Theme }>`
+const Cell = styled('td')<{ cellIndex: number; numMetrics: number; theme: Theme; metric: Metric }>`
 	border: none;
 	padding: 1rem;
 	display: table-cell;
 	width: max-content;
 	text-align: right;
 	background-color: white;
+	text-align: ${p => p.metric.textAlignment};
 	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
 

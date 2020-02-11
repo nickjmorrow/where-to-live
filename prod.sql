@@ -1,1 +1,2 @@
-SELECT * FROM wtl.cities
+SELECT * FROM wtl.cities;
+

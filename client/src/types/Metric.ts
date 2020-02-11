@@ -4,4 +4,6 @@ export interface Metric {
 	isVisible: boolean;
 	multiplier: number;
 	isIncludedInCalculation: boolean;
+	textAlignment: 'left' | 'right';
+	mask: string;
 }

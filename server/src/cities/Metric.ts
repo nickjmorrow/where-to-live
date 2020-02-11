@@ -5,4 +5,6 @@ export interface Metric {
 	accessor: keyof CityModel;
 	multiplier: number;
 	isIncludedInCalculation: boolean;
+	mask: string;
+	textAlignment: 'left' | 'right';
 }

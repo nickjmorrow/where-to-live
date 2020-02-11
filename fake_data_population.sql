@@ -1,0 +1,12 @@
+INSERT INTO wtl.cities (name, population, happiness, cost_of_living, tech_jobs)
+VALUES
+    ('San Francisco, CA', 100000, 59, 73, 43000)
+    , ('Chicago, IL', 200000, 92, 23, 29000)
+    , ('Atlanta, GA', 350000, 73, 29, 37000)
+    , ('New York, NY', 900000, 27, 92, 56000)
+    , ('Seattle, WA', 400000, 62, 27, 70100)
+    , ('San Diego, CA', 120000, 91, 78, 10200)
+    , ('Los Angeles, CA', 480000, 82, 64, 54000)
+    , ('Raleigh, NC', 320000, 67, 73, 56000)
+    , ('Boston, MA', 230000, 94, 82, 34000)
+    , ('Philadelphia, PA', 640000, 92, 83, 45000)
