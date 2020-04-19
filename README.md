@@ -1,32 +1,28 @@
-# where-to-live
+# Weighted Rankings for Places to Live
 
-Web app with relevant data for deciding where to live.
+The demo can be found [here](https://wheretolive.netlify.app/).
 
-## Goal
+## At a Glance
 
-- Make it easier to decide what cities to live in.
-- I want to know what cities have the highest standard of living AND the most tech jobs.
+This is a React/Node.js app for viewing useful data to decide where to live and applying a weighted ranking to each metric.
 
-## Procedure
+## What is it For
 
-Should filter to some list of "top" cities, likely by minimum population. E.g. include top 50 most populated cities in the US, unioned with the top 50 most populated cities in the world.
+It's hard to find an easy-to-use interface that supports looking through city-related data for where to live. The data is easy to find, but it's all separate and makes cross-comparison difficult. 
 
-## Useful Datasets
+## Technical Stack
 
-- "Safety" of a country
-- Standard of living
-- Number of jobs
-- Number of technical jobs
-- Cost of higher education
+- The **front-end** is built on React and Webpack. I wanted to reuse components from a central componennt library, and React makes it easy to isolate logic. Redux is used lightly and helps to move the data fetching and handling away from React.
+- The **back-end** is built in Node.js and TypeScript, because I wanted to spin something up quickly while maintaining type-safety.
+- The **back-end** is built with Postgresql. This data need not be stored relationally, but I have experience with Postgresql and wanted to get going quickly. MongoDB or any other NoSQL database would be a valid alternative. 
 
-## Visualization
+## Improvements
 
-- Should be able to filter to "Just US" or "World".
-- Mercator projection, either global or US-centric.
-- Heat map or some sort of indication for a city being "highly ranked".
-- Next to mercator projection, show a list, sorted, of cities by the current "algorithm".
-- Users can adjust algorithm to favor cities with higher standard of living. And if they don't care about some other metric (e.g. smog), they can deselect that. At the beginning, all characteristics start with equal weighting.
+- Add horizontal scrolling to the table to make it easier to view additional metrics.
+- Make some of the interactions more obvious, like deselecting a city and not including it in calculations.
 
-## Resources
+## Sources
 
-- [Amcharts](https://www.amcharts.com/demos/map-image-drill-down/?theme=dataviz)
+- [Quality of life and other metrics](https://www.numbeo.com/quality-of-life/rankings.jsp)
+- [City populations](https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population)
+
