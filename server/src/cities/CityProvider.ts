@@ -20,10 +20,16 @@ export class CityProvider {
 		return {
 			cityId: city.cityId,
 			label: city.name,
-			costOfLiving: city.costOfLiving,
 			population: city.population,
-			happiness: city.happiness,
-			techJobs: city.techJobs,
+			qualityOfLifeIndex: city.qualityOfLifeIndex,
+			purchasingPowerIndex: city.purchasingPowerIndex,
+			safetyIndex: city.safetyIndex,
+			healthCareIndex: city.healthCareIndex,
+			costOfLivingIndex: city.costOfLivingIndex,
+			propertyPriceToIncomeRatio: city.propertyPriceToIncomeRatio,
+			trafficCommuteTimeIndex: city.trafficCommuteTimeIndex,
+			pollutionIndex: city.pollutionIndex,
+			climateIndex: city.climateIndex,
 			isVisible: true,
 		};
 	}

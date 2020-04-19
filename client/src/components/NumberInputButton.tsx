@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const NumberInputButton = styled('div')<{ backgroundColor: string; onHoverBackgroundColor: string }>`
+export const NumberInputButton = styled('div')<{ backgroundColor: string; hoverBackgroundColor: string }>`
 	height: 15px;
 	width: 15px;
 	cursor: pointer;
@@ -8,6 +8,6 @@ export const NumberInputButton = styled('div')<{ backgroundColor: string; onHove
 	transition: all 250ms;
 	&: hover {
 		transition: all 250ms;
-		background-color: ${p => p.onHoverBackgroundColor};
+		background-color: ${p => p.hoverBackgroundColor};
 	}
 `;

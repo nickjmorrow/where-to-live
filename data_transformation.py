@@ -2,157 +2,84 @@
 # -*- coding: utf-8 -*-
 
 
-x = """1	New York, NY, United States	100.00	100.00	100.00	100.00	100.00	100.00
-2	San Francisco, CA, United States	90.96	115.03	102.47	86.46	93.03	135.30
-3	Anchorage, AK, United States	90.70	38.81	65.88	87.87	77.31	118.69
-4	Honolulu, HI, United States	89.13	62.76	76.53	89.28	81.93	88.42
-5	Brooklyn, NY, United States	88.54	81.07	84.97	82.70	90.92	92.43
-6	Washington, DC, United States	87.20	78.53	83.06	85.91	85.73	126.90
-7	Oakland, CA, United States	86.05	79.32	82.83	88.73	73.13	113.63
-8	Seattle, WA, United States	85.50	65.43	75.90	81.32	80.09	133.40
-9	Bellevue, WA, United States	81.98	62.40	72.62	76.39	75.09	164.68
-10	Boston, MA, United States	81.85	74.01	78.10	79.99	79.93	115.76
-11	Chicago, IL, United States	79.71	58.16	69.40	75.99	75.14	115.10
-12	Sarasota, FL, United States	78.79	46.24	63.24	88.74	70.29	81.90
-13	Philadelphia, PA, United States	78.35	46.76	63.24	76.55	71.36	98.46
-14	New Orleans, LA, United States	78.33	41.15	60.55	76.94	74.30	89.63
-15	San Jose, CA, United States	78.14	83.40	80.65	70.95	81.52	143.34
-16	Portland, OR, United States	78.13	49.13	64.26	75.48	67.33	113.06
-17	Toronto, Canada	77.55	50.04	64.39	73.39	74.45	77.88
-18	Sacramento, CA, United States	76.39	46.28	62.00	69.28	74.51	114.71
-19	Minneapolis, MN, United States	76.34	44.37	61.05	67.58	77.12	126.65
-20	Los Angeles, CA, United States	76.06	71.78	74.01	70.71	78.32	113.20
-21	Albany, NY, United States	75.08	32.86	54.90	69.09	78.75	105.12
-22	Miami, FL, United States	74.64	58.13	66.75	68.60	76.87	97.13
-23	Pittsburgh, PA, United States	73.92	36.05	55.82	69.97	65.19	122.01
-24	Jacksonville, FL, United States	73.84	33.44	54.53	76.42	75.69	121.38
-25	San Diego, CA, United States	73.75	66.50	70.29	67.18	75.38	130.40
-26	Baltimore, MD, United States	73.60	42.41	58.70	66.98	75.26	125.69
-27	Reno, NV, United States	73.47	38.06	56.55	74.57	73.68	116.17
-28	Atlanta, GA, United States	73.21	46.45	60.42	69.34	67.70	139.29
-29	Denver, CO, United States	72.71	51.79	62.71	64.65	75.54	130.63
-30	Vancouver, Canada	72.66	51.15	62.37	72.64	67.19	90.13
-31	Halifax, Canada	72.08	29.37	51.67	74.36	62.12	78.96
-32	Tucson, AZ, United States	72.03	26.26	50.16	63.59	68.66	105.03
-33	Columbus, OH, United States	71.84	31.69	52.65	68.94	66.18	140.21
-34	Buffalo, NY, United States	71.55	27.88	50.67	65.89	68.56	110.37
-35	Nashville, TN, United States	71.53	46.67	59.65	64.87	79.18	124.49
-36	Olympia, WA, United States	71.43	41.10	56.93	67.05	69.38	129.38
-37	Charlotte, NC, United States	71.26	42.24	57.39	61.59	75.29	144.68
-38	Victoria, Canada	70.74	38.64	55.39	70.14	67.38	89.57
-39	Tacoma, WA, United States	70.61	41.02	56.47	59.34	69.40	113.91
-40	Colorado Springs, CO, United States	70.55	35.84	53.96	69.63	58.19	112.75
-41	Saint Louis, MO, United States	70.53	28.89	50.63	69.89	63.17	126.22
-42	Calgary, Canada	69.98	28.35	50.08	62.83	69.95	125.61
-43	San Juan, Puerto Rico	69.71	24.07	47.90	65.58	70.67	79.64
-44	Saint John's, Canada	69.40	22.09	46.79	66.19	65.53	89.90
-45	Raleigh, NC, United States	69.18	36.46	53.55	69.96	65.39	145.74
-46	Edmonton, Canada	68.90	28.78	49.72	60.89	68.74	110.62
-47	Kansas City, MO, United States	68.76	30.41	50.43	60.70	72.68	134.77
-48	Saskatoon, Canada	68.36	24.34	47.32	63.68	62.99	95.14
-49	Regina, Canada	68.06	29.28	49.53	66.41	61.42	94.93
-50	Ottawa, Canada	67.49	33.82	51.39	60.62	66.58	120.36
-51	Austin, TX, United States	67.36	51.61	59.83	63.39	70.60	146.69
-52	Las Vegas, NV, United States	67.21	35.82	52.20	55.37	74.76	127.90
-53	Tampa, FL, United States	67.14	40.72	54.52	64.89	62.97	125.21
-54	Dallas, TX, United States	67.09	46.84	57.41	59.46	69.06	156.25
-55	Richmond, VA, United States	66.80	33.95	51.10	58.76	74.91	112.49
-56	Orlando, FL, United States	66.75	41.48	54.67	60.57	70.76	104.76
-57	Phoenix, AZ, United States	66.72	36.20	52.13	60.86	66.49	129.91
-58	Quebec City, Canada	66.57	17.00	42.88	67.04	58.29	110.46
-59	Montreal, Canada	66.54	28.29	48.25	66.90	61.03	97.52
-60	Louisville, KY, United States	66.20	28.14	48.00	58.41	76.45	120.22
-61	Indianapolis, IN, United States	65.82	29.12	48.27	61.44	61.25	109.71
-62	San Antonio, TX, United States	65.35	36.28	51.45	62.30	63.57	116.68
-63	Houston, TX, United States	64.78	42.66	54.20	56.38	75.66	142.56
-64	Madison, WI, United States	64.26	38.02	51.71	55.94	68.14	124.43
-65	Brampton, Canada	64.24	34.42	49.98	56.51	55.18	79.78
-66	Hamilton, Canada	64.13	27.68	46.70	58.37	62.20	102.96
-67	Tulsa, OK, United States	63.89	26.23	45.88	63.19	58.12	118.18
-68	Salt Lake City, UT, United States	63.66	36.59	50.72	57.97	61.22	130.57
-69	Detroit, MI, United States	63.47	37.63	51.12	62.93	57.73	78.67
-70	Winnipeg, Canada	63.35	24.03	44.55	58.61	59.06	101.91
-71	Kitchener, Canada	62.78	27.93	46.11	54.57	66.53	97.36
-72	Cincinnati, OH, United States	61.27	33.85	48.17	56.48	59.33	131.97
-73	Little Rock, AR, United States	60.63	26.50	44.32	54.52	64.87	124.02
-74	Boise, ID, United States	60.40	34.33	47.94	50.08	68.13	99.10
-75	London, Canada	59.28	26.32	43.52	50.81	58.61	98.84
-76	San Jose, Costa Rica	58.06	18.43	39.12	53.68	48.94	38.55
-77	Kingston, Jamaica	56.88	15.73	37.22	54.14	42.51	30.11
-78	Panama City, Panama	56.86	27.35	42.76	56.58	50.47	35.27
-79	El Paso, TX, United States	52.04	22.62	37.98	52.24	39.13	127.86
-80	Montevideo, Uruguay	51.85	15.33	34.39	40.99	46.46	40.10
-81	San Salvador, El Salvador	47.63	14.45	31.77	47.77	32.51	24.01
-82	Santiago, Chile	45.19	15.03	30.77	37.72	44.52	42.57
-83	Santo Domingo, Dominican Republic	44.89	12.32	29.32	37.22	37.65	24.22
-84	Sao Paulo, Brazil	44.30	15.84	30.69	32.46	38.09	32.84
-85	Guatemala City, Guatemala	43.91	15.49	30.33	39.01	34.13	39.08
-86	Brasilia, Brazil	43.85	14.59	29.86	32.10	34.93	58.09
-87	Guayaquil, Ecuador	43.71	13.98	29.49	37.97	28.64	33.14
-88	Quito, Ecuador	43.40	12.76	28.76	39.03	33.04	39.14
-89	Paramaribo, Suriname	42.88	7.73	26.08	45.50	34.28	22.96
-90	Lima, Peru	42.29	15.61	29.54	37.77	27.98	31.74
-91	Rio de Janeiro, Brazil	41.75	13.86	28.41	30.18	31.62	32.49
-92	Campinas, Brazil	39.70	9.59	25.31	27.36	32.61	41.38
-93	Tijuana, Mexico	38.92	11.80	25.96	35.80	34.58	37.05
-94	Cancun, Mexico	38.70	13.16	26.50	34.32	33.34	37.97
-95	Curitiba, Brazil	38.63	8.90	24.42	28.46	32.10	32.67
-96	Monterrey, Mexico	38.58	13.19	26.44	35.03	34.76	56.42
-97	Mexico City, Mexico	38.38	20.53	29.85	33.65	32.50	42.95
-98	Porto Alegre, Brazil	38.38	9.80	24.72	29.24	29.12	33.01
-99	Queretaro, Mexico	37.56	10.81	24.77	35.41	30.78	49.11
-100	Belo Horizonte, Brazil	37.20	9.37	23.89	26.28	30.07	23.56
-101	Guadalajara, Mexico	36.01	11.39	24.24	32.91	32.48	43.63
-102	Cuenca, Ecuador	34.73	11.43	23.59	30.30	25.12	33.75
-103	Puebla, Mexico	34.50	8.54	22.08	31.59	25.33	40.34
-104	Buenos Aires, Argentina	34.31	9.09	22.25	26.60	32.17	47.91
-105	Merida, Mexico	33.75	8.33	21.60	31.91	28.25	35.97
-106	Bogota, Colombia	31.65	11.69	22.11	24.97	23.63	28.55
-107	Asuncion, Paraguay	30.51	9.98	20.69	24.82	24.41	33.48
-108	Medellin, Colombia	29.00	9.94	19.88	24.78	22.20	30.95
-109	Cali, Colombia	27.68	7.04	17.82	22.04	19.58	36.33
-110	Caracas, Venezuela	27.54	7.82	18.11	29.18	23.74	2.37
+x = """1	Raleigh, NC, United States	210.54	145.30	68.11	75.66	69.80	2.73	32.41	20.90	83.88
+2	Columbus, OH, United States	200.44	142.17	58.21	73.46	70.50	1.89	25.98	25.13	71.29
+3	Madison, WI, United States	200.18	124.31	70.27	78.83	64.67	3.35	23.73	17.61	51.64
+4	Charlotte, NC, United States	197.91	144.29	56.89	74.47	72.40	2.46	36.38	27.24	84.05
+5	Austin, TX, United States	194.86	145.76	64.46	70.40	67.79	3.58	34.37	35.47	82.08
+6	San Diego, CA, United States	191.83	130.19	63.72	70.69	74.22	5.22	33.63	34.94	97.08
+7	Ottawa, Canada	189.58	119.69	75.48	74.92	68.64	4.64	32.20	19.83	44.46
+8	Victoria, Canada	189.24	89.41	68.05	69.93	71.67	7.65	29.25	14.88	92.52
+9	Kansas City, MO, United States	187.36	134.63	40.84	78.94	69.17	1.86	26.18	32.48	75.08
+10	Dallas, TX, United States	186.28	155.30	50.64	65.72	68.03	2.24	34.22	42.87	81.85
+11	Seattle, WA, United States	186.00	133.43	53.50	73.79	85.77	5.62	42.17	28.41	91.73
+12	Tampa, FL, United States	184.79	126.19	50.46	67.91	67.10	2.81	35.84	28.30	84.67
+13	Calgary, Canada	181.89	124.35	67.76	77.17	70.66	4.72	30.59	24.81	33.09
+14	Jacksonville, FL, United States	181.76	120.90	43.25	74.38	74.57	2.03	33.94	31.18	87.81
+15	Portland, OR, United States	181.59	112.82	52.11	72.88	78.63	4.33	33.38	29.57	89.56
+16	San Jose, CA, United States	180.70	143.48	57.53	70.49	78.64	6.59	38.14	47.94	95.53
+17	Cincinnati, OH, United States	180.59	131.81	50.76	68.63	61.64	2.22	24.89	42.82	73.24
+18	San Antonio, TX, United States	177.89	116.40	53.41	72.40	65.78	2.31	31.55	39.81	80.58
+19	Minneapolis, MN, United States	177.45	127.18	50.96	79.01	76.70	2.95	36.72	27.01	49.46
+20	Pittsburgh, PA, United States	176.92	123.08	63.53	72.38	73.61	1.99	38.31	42.85	72.13
+21	Reno, NV, United States	176.51	116.10	55.35	62.24	73.85	3.49	24.89	29.90	62.28
+22	Sacramento, CA, United States	174.97	115.40	50.21	68.00	77.00	3.72	26.64	43.44	90.64
+23	Boston, MA, United States	174.91	112.39	64.37	75.30	82.88	7.81	44.86	26.61	71.73
+24	Nashville, TN, United States	174.31	122.67	53.26	64.26	73.19	2.99	38.14	38.08	83.02
+25	Saint Louis, MO, United States	174.12	126.33	30.84	80.95	70.78	1.89	26.95	40.03	74.75
+26	Tucson, AZ, United States	173.18	105.20	50.09	59.75	72.12	2.81	29.50	25.95	72.66
+27	Vancouver, Canada	171.69	88.95	63.71	74.90	73.91	14.34	37.10	23.71	91.15
+28	Denver, CO, United States	171.42	130.33	59.11	70.10	73.30	4.21	36.75	40.73	56.28
+29	Atlanta, GA, United States	170.58	140.47	37.80	65.86	73.89	2.87	42.36	43.98	89.73
+30	Edmonton, Canada	169.63	108.08	57.96	78.28	69.55	3.92	29.31	28.60	32.11
+31	Washington, DC, United States	168.66	130.25	43.72	70.23	87.74	4.42	41.97	39.62	81.62
+32	Anchorage, AK, United States	167.96	118.44	38.88	60.62	91.36	2.53	27.64	17.23	41.61
+33	Orlando, FL, United States	167.92	102.08	47.84	63.52	65.70	3.20	37.06	34.53	87.23
+34	Oakland, CA, United States	167.76	113.60	35.33	78.75	86.51	6.39	37.96	37.44	96.40
+35	Salt Lake City, UT, United States	167.38	129.35	69.18	70.14	64.76	4.06	33.93	62.50	66.52
+36	San Francisco, CA, United States	166.86	135.90	47.21	66.88	91.51	7.78	49.72	42.73	97.26
+37	Houston, TX, United States	165.28	141.31	36.65	71.11	65.13	2.12	41.42	55.77	85.53
+38	Halifax, Canada	164.12	80.05	58.68	70.51	72.33	7.61	30.15	22.80	58.99
+39	Indianapolis, IN, United States	163.46	110.02	43.10	69.88	66.34	2.30	29.40	44.58	69.92
+40	Baltimore, MD, United States	163.37	125.24	26.77	76.44	74.29	2.42	31.78	48.05	81.24
+41	Montreal, Canada	162.11	96.64	71.12	64.05	67.37	6.98	39.76	32.36	52.37
+42	Honolulu, HI, United States	159.86	88.29	56.55	70.71	89.70	9.32	41.45	37.16	95.33
+43	Las Vegas, NV, United States	158.86	127.88	44.91	55.96	67.46	2.75	26.81	50.04	57.40
+44	Miami, FL, United States	157.18	100.26	47.51	64.37	74.16	4.79	43.29	40.71	85.69
+45	Phoenix, AZ, United States	155.66	127.26	48.12	66.53	67.41	2.85	32.17	57.24	53.76
+46	Hamilton, Canada	155.59	103.16	51.19	81.92	64.24	6.30	34.56	51.58	61.06
+47	Chicago, IL, United States	152.44	113.52	36.56	68.27	80.18	3.70	41.77	41.98	66.11
+48	Philadelphia, PA, United States	149.58	100.23	39.74	70.47	78.84	3.68	40.00	49.50	77.98
+49	Winnipeg, Canada	146.16	100.67	43.24	69.16	63.69	4.74	31.97	36.78	24.67
+50	Toronto, Canada	144.47	77.60	61.63	75.60	78.49	13.91	44.69	37.95	65.35
+51	Regina, Canada	144.46	95.08	44.51	68.15	68.19	4.97	17.17	41.21	14.28
+52	Los Angeles, CA, United States	144.24	113.78	54.93	64.85	76.55	7.22	59.45	62.86	95.50
+53	New York, NY, United States	141.93	100.00	55.56	65.05	100.00	10.76	43.01	54.25	79.66
+54	Curitiba, Brazil	135.61	32.89	36.25	66.00	40.02	14.66	30.29	32.20	99.60
+55	San Juan, Puerto Rico	130.73	79.99	30.46	60.97	70.11	4.62	38.71	50.47	71.25
+56	Campinas, Brazil	129.75	41.34	32.52	60.59	41.06	10.80	28.52	46.60	98.87
+57	Detroit, MI, United States	126.13	78.58	27.38	64.02	63.85	1.70	46.45	52.94	66.03
+58	Monterrey, Mexico	125.26	56.33	48.28	63.63	38.74	5.94	31.28	72.30	80.37
+59	Montevideo, Uruguay	123.59	40.38	43.08	66.42	51.63	15.25	40.11	49.33	98.04
+60	Quito, Ecuador	119.55	39.03	44.72	69.77	43.85	11.08	40.64	65.31	98.97
+61	Guadalajara, Mexico	117.43	44.30	37.66	77.53	36.15	9.72	41.55	70.45	92.83
+62	Medellin, Colombia	117.13	29.90	48.66	77.28	30.19	17.90	38.29	64.89	99.76
+63	Santiago, Chile	112.37	43.04	49.06	66.38	45.17	15.69	37.04	70.91	90.21
+64	San Jose, Costa Rica	111.98	39.08	43.73	63.15	58.48	9.44	65.58	53.80	99.48
+65	Buenos Aires, Argentina	110.51	46.67	38.69	69.04	34.58	26.09	47.46	51.90	98.28
+66	Porto Alegre, Brazil	110.36	34.27	23.46	62.20	39.49	15.21	32.26	56.38	98.74
+67	Panama City, Panama	108.25	35.25	52.85	57.83	57.20	11.97	34.98	64.26	67.84
+68	Guatemala City, Guatemala	107.71	40.18	37.39	63.63	44.26	9.89	50.11	69.66	99.89
+69	Belo Horizonte, Brazil	95.95	23.54	34.46	61.22	38.07	26.28	44.30	53.66	98.50
+70	Mexico City, Mexico	89.41	42.91	31.55	64.64	38.55	15.07	51.09	83.57	92.37
+71	Bogota, Colombia	89.11	28.87	38.37	64.95	33.16	24.88	51.32	69.19	97.12
+72	Lima, Peru	81.82	31.70	30.95	57.35	42.59	15.75	49.73	85.44	97.69
+73	Sao Paulo, Brazil	78.38	31.97	29.02	56.53	45.52	20.68	51.51	80.32	99.04
+74	Rio de Janeiro, Brazil	74.20	33.01	22.59	42.59	42.70	20.62	52.44	68.45	88.22
+75	Caracas, Venezuela	0.00	2.36	15.10	39.28	27.68	150.55	34.69	72.41	99.93
 """
 
-y1 = [l.split('\t') for l in x.splitlines()]
-
-
-def format(str):
-    return str.replace(',', '')
-
-
-def contains_US(str):
-    return 'United States' in str
-
-
-def remove_non_ascii(text):
-    return ''.join([i if ord(i) < 128 else '' for i in text])
-
-
-def format_coords(coords):
-    coords = remove_non_ascii(coords)
-    coords = coords.split(' ')
-    coords[0] = float(coords[0][:-1]) if coords[0][-1] == 'N' else - \
-        1 * float(coords[0][:-1])
-    coords[1] = float(coords[1][:-1]) if coords[1][-1] == 'E' else - \
-        1 * float(coords[1][:-1])
-    return coords
-
-
-def format_city(city):
-    i = city.find('[')
-    if i == -1:
-        return city
-    new_city = city[:i]
-    return new_city.strip()
-
-
-y2 = [[x[1], x[2]]
-      for x in y1]
-
-y3 = [x for x in y2 if contains_US(x[0])]
-
-y4 = [[x[0][:-15].split(', '), x[1]] for x in y3]
-y5 = '\n, '.join(['(\'{x[0][0]}\', \'{x[0][1]}\', {x[1]})'.format(x=x)
-                  for x in y4])
-print(y5)
+lines = [l for l in x.splitlines()]
+data_per_line = [l.split('\t') for l in lines]
+print('\n UNION SELECT '.join(['\'{l[1]}\', {l[2]}, {l[3]}, {l[4]}, {l[5]}, {l[6]}, {l[7]}, {l[8]}, {l[9]}, {l[10]}'.format(l=l)
+                               for l in data_per_line]))

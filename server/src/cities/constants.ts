@@ -31,10 +31,10 @@ export const metricGroups: MetricGroup[] = [
 		name: 'Financial',
 		metrics: [
 			{
-				label: 'Cost of Living',
-				accessor: 'costOfLiving',
+				label: 'CoL',
+				accessor: 'costOfLivingIndex',
 				textAlignment: 'right',
-				mask: '999,999,999',
+				mask: '999,999,999.99',
 				calculationConfig: {
 					sortType: {
 						order: 'ascending',
@@ -44,10 +44,10 @@ export const metricGroups: MetricGroup[] = [
 				},
 			},
 			{
-				label: 'Tech Jobs',
-				accessor: 'techJobs',
+				label: 'Pur. Power Idx',
+				accessor: 'purchasingPowerIndex',
 				textAlignment: 'right',
-				mask: '999,999,999',
+				mask: '999,999,999.99',
 				calculationConfig: {
 					sortType: {
 						order: 'descending',
@@ -56,24 +56,37 @@ export const metricGroups: MetricGroup[] = [
 					isIncludedInCalculation: true,
 				},
 			},
+			// {
+			// 	label: 'Property Price to Income ratio',
+			// 	accessor: 'propertyPriceToIncomeRatio',
+			// 	textAlignment: 'right',
+			// 	mask: '999,999,999.99',
+			// 	calculationConfig: {
+			// 		sortType: {
+			// 			order: 'ascending',
+			// 		},
+			// 		multiplier: 1,
+			// 		isIncludedInCalculation: true,
+			// 	},
+			// },
+			// {
+			// 	label: 'Health Care Index',
+			// 	accessor: 'healthCareIndex',
+			// 	textAlignment: 'right',
+			// 	mask: '999,999,999.99',
+			// 	calculationConfig: {
+			// 		sortType: {
+			// 			order: 'descending',
+			// 		},
+			// 		multiplier: 1,
+			// 		isIncludedInCalculation: true,
+			// 	},
+			// },
 		],
 	},
 	{
 		name: 'Personal',
 		metrics: [
-			{
-				label: 'Happiness',
-				accessor: 'happiness',
-				textAlignment: 'right',
-				mask: '999,999,999',
-				calculationConfig: {
-					sortType: {
-						order: 'descending',
-					},
-					multiplier: 1,
-					isIncludedInCalculation: true,
-				},
-			},
 			{
 				label: 'Population',
 				accessor: 'population',
@@ -87,6 +100,71 @@ export const metricGroups: MetricGroup[] = [
 					isIncludedInCalculation: true,
 				},
 			},
+			{
+				label: 'QoL Idx',
+				accessor: 'qualityOfLifeIndex',
+				textAlignment: 'right',
+				mask: '999,999,999.99',
+				calculationConfig: {
+					sortType: {
+						order: 'descending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
+			},
+			{
+				label: 'Safety Idx',
+				accessor: 'safetyIndex',
+				textAlignment: 'right',
+				mask: '999,999,999',
+				calculationConfig: {
+					sortType: {
+						order: 'descending',
+					},
+					multiplier: 1,
+					isIncludedInCalculation: true,
+				},
+			},
+			// {
+			// 	label: 'TCT Idx',
+			// 	accessor: 'trafficCommuteTimeIndex',
+			// 	textAlignment: 'right',
+			// 	mask: '999,999,999.99',
+			// 	calculationConfig: {
+			// 		sortType: {
+			// 			order: 'ascending',
+			// 		},
+			// 		multiplier: 1,
+			// 		isIncludedInCalculation: true,
+			// 	},
+			// },
+			// {
+			// 	label: 'Pollution Index',
+			// 	accessor: 'pollutionIndex',
+			// 	textAlignment: 'right',
+			// 	mask: '999,999,999.99',
+			// 	calculationConfig: {
+			// 		sortType: {
+			// 			order: 'ascending',
+			// 		},
+			// 		multiplier: 1,
+			// 		isIncludedInCalculation: true,
+			// 	},
+			// },
+			// {
+			// 	label: 'Climate Index',
+			// 	accessor: 'climateIndex',
+			// 	textAlignment: 'right',
+			// 	mask: '999,999,999.99',
+			// 	calculationConfig: {
+			// 		sortType: {
+			// 			order: 'descending',
+			// 		},
+			// 		multiplier: 1,
+			// 		isIncludedInCalculation: true,
+			// 	},
+			// },
 		],
 	},
 ];

@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSortBy, useTable, Row as RowType } from 'react-table';
 import { uiActions } from 'reduxUtilities/uiActions';
 import { getCities, getMetricsSelector, selectors } from 'reduxUtilities/uiSelectors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { City } from 'types/City';
 import { Metric } from 'types/Metric';
 import format from 'number-format.js';
 import { UiState } from 'reduxUtilities/uiReducer';
+import { MetricPillbox } from 'components/MetricPillbox';
 
 const TableInternal: React.FC = () => {
 	const dispatch = useDispatch();
@@ -33,13 +34,13 @@ const TableInternal: React.FC = () => {
 
 	const getMetric = (index: number) => metrics[index];
 
-	const decrement = (metric: Metric) => dispatch(uiActions.updateCounter.decrement(metric));
-	const increment = (metric: Metric) => dispatch(uiActions.updateCounter.increment(metric));
 	const sortMetric = (metric: Metric) => dispatch(uiActions.sortMetric(metric));
 
 	const [hoveredMetric, setHoveredMetric] = React.useState<Metric | null>(null);
 
 	const ALWAYS_SHOW_PILLBOX = false;
+
+	const isSortedMetric = (metric: Metric) => metric.accessor === sortedMetric.accessor;
 
 	return (
 		<div>
@@ -57,27 +58,24 @@ const TableInternal: React.FC = () => {
 							index={columnIndex}
 							numMetrics={metrics.length}
 							theme={theme}
+							key={columnIndex}
+							isSortedMetric={isSortedMetric(getMetric(columnIndex))}
 						>
 							<div
 								style={{
 									display: 'flex',
 									justifyContent: getContentJustification(getMetric(columnIndex)),
-									minWidth: '150px',
+									minWidth: '155px',
 									flexDirection: 'row-reverse',
 								}}
 							>
 								<div style={{ display: 'flex', alignItems: 'center' }}>
-									<Typography
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											marginRight: '8px',
-											width: 'max-content',
-										}}
-									>
-										{getMetric(columnIndex).label}{' '}
+									<Typography style={{ marginRight: '8px' }} colorVariant={'inherit'}>
+										{getMetric(columnIndex).label}
+									</Typography>
+									<Typography colorVariant={'inherit'}>
 										{getMetric(columnIndex).calculationConfig.isIncludedInCalculation &&
-											getMetric(columnIndex).calculationConfig.multiplier}
+											getMetric(columnIndex).calculationConfig.multiplier + 'x'}
 									</Typography>
 								</div>
 								<div
@@ -107,40 +105,7 @@ const TableInternal: React.FC = () => {
 													alignItems: 'center',
 												}}
 											>
-												{
-													<div
-														style={{
-															display: 'flex',
-															flexDirection: 'column',
-															marginRight: '8px',
-														}}
-													>
-														<NumberInputButton
-															backgroundColor={'hsl(150, 75%, 70%)'}
-															onHoverBackgroundColor={'hsl(150, 75%, 85%)'}
-															onClick={e => {
-																e.stopPropagation();
-																increment(getMetric(columnIndex));
-															}}
-															style={{
-																borderTopLeftRadius: '6px',
-																borderTopRightRadius: '6px',
-															}}
-														></NumberInputButton>
-														<NumberInputButton
-															style={{
-																borderBottomLeftRadius: '6px',
-																borderBottomRightRadius: '6px',
-															}}
-															onClick={e => {
-																e.stopPropagation();
-																decrement(getMetric(columnIndex));
-															}}
-															backgroundColor={'hsl(0, 75%, 70%)'}
-															onHoverBackgroundColor={'hsl(0, 75%, 85%)'}
-														></NumberInputButton>
-													</div>
-												}
+												<MetricPillbox metricIndex={columnIndex} />
 											</div>
 										</Fade>
 									}
@@ -155,12 +120,12 @@ const TableInternal: React.FC = () => {
 					<Heading>
 						<HiddenHeadRow>
 							{headers.map((column, columnIndex) => (
-								<HiddenHead>
+								<HiddenHead key={columnIndex}>
 									<div
 										style={{
 											display: 'flex',
 											justifyContent: 'flex-start',
-											minWidth: '150px',
+											minWidth: '155px',
 											flexDirection: 'row-reverse',
 										}}
 									></div>
@@ -176,6 +141,7 @@ const TableInternal: React.FC = () => {
 								<BodyRow
 									{...row.getRowProps()}
 									city={row.original}
+									key={row.original.label}
 									theme={theme}
 									onClick={() => toggleCityVisibility(row.original)}
 								>
@@ -186,6 +152,7 @@ const TableInternal: React.FC = () => {
 												numMetrics={metrics.length}
 												theme={theme}
 												metric={getMetric(cellIndex)}
+												key={cellIndex}
 												{...cell.getCellProps()}
 											>
 												<Typography>{format('#,##0.####', cell.value)}</Typography>
@@ -205,7 +172,7 @@ const TableInternal: React.FC = () => {
 const sortFunc = (sortedMetric: UiState['sortedMetric']) => (aRow: RowType<City>, bRow: RowType<City>) => {
 	const a = aRow.original;
 	const b = bRow.original;
-	if (a.isVisible != b.isVisible) {
+	if (a.isVisible !== b.isVisible) {
 		return a.isVisible ? -1 : 1;
 	}
 
@@ -258,11 +225,23 @@ interface CellStyleArguments {
 	theme: Theme;
 }
 
-const Head = styled('th')<CellStyleArguments>`
+const Head = styled('th')<CellStyleArguments & { isSortedMetric: boolean }>`
 	padding: 8px;
 	min-width: max-content;
 	background-color: white;
 	cursor: pointer;
+	${({ isSortedMetric, theme }) => {
+		if (isSortedMetric) {
+			return css`
+				color: ${theme.colors.core.cs5};
+			`;
+		}
+		return `color: ${theme.colors.neutral.cs7}`;
+	}}
+	transition: color ${({ theme }) => theme.transitions.fast};
+	&:hover {
+		color: ${({ theme }) => theme.colors.core.cs5};
+	}
 	${({ index, numMetrics, theme }) => getCellStyle({ index, numMetrics, theme })}
 `;
 

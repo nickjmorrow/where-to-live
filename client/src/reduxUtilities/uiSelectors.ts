@@ -14,7 +14,14 @@ export const getMetricsSelector = createSelector(getMetricGroups, metricGroups =
 	return metricGroups.reduce<Metric[]>((agg, cur) => [...agg, ...cur.metrics], []);
 });
 
+const getIsCalculating = (state: RootState) => getUiSlice(state).isCalculating;
+
+const getSortedMetric = (state: RootState) => getUiSlice(state).sortedMetric;
+
+const getMetricByIndex = (index: number) => createSelector(getMetricsSelector, metrics => metrics[index]);
+
 export const selectors = {
-	getIsCalculating: (state: RootState) => getUiSlice(state).isCalculating,
-	getSortedMetric: (state: RootState) => getUiSlice(state).sortedMetric,
+	getIsCalculating,
+	getSortedMetric,
+	getMetricByIndex,
 };

@@ -1,7 +1,19 @@
+import { City } from 'cities/entities/City';
+
+// TODO: Use "dynamic" type
 export interface Metric {
 	label: string;
-	// TODO: Use "dynamic" type
-	accessor: 'costOfLiving' | 'happiness' | 'population' | 'techJobs';
+	accessor:
+		| 'population'
+		| 'qualityOfLifeIndex'
+		| 'purchasingPowerIndex'
+		| 'safetyIndex'
+		| 'healthCareIndex'
+		| 'costOfLivingIndex'
+		| 'propertyPriceToIncomeRatio'
+		| 'trafficCommuteTimeIndex'
+		| 'pollutionIndex'
+		| 'climateIndex';
 	mask: string;
 	textAlignment: 'left' | 'right';
 	calculationConfig: CalculationConfig;

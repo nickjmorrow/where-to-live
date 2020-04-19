@@ -10,7 +10,6 @@ export const CalculateButton: React.FC = () => {
 	const metrics = useSelector(getMetricsSelector);
 	const isCalculating = useSelector(selectors.getIsCalculating);
 
-	console.log(isCalculating);
 	return (
 		<Button
 			isLoading={isCalculating}
