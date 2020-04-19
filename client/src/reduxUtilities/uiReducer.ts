@@ -4,6 +4,7 @@ import { uiActions, UiActionKeys } from 'reduxUtilities/uiActions';
 import { City } from 'types/City';
 import { MetricGroup } from 'types/MetricGroup';
 import { Metric } from 'types/Metric';
+import { initialCityScores, initialMetricGroups } from 'core/constants';
 
 export type UiState = Readonly<typeof initialState>;
 
@@ -11,8 +12,8 @@ export type UiState = Readonly<typeof initialState>;
 type SortOrder = 'ascending' | 'descending';
 
 const initialState = {
-	cities: [] as City[],
-	metricGroups: [] as MetricGroup[],
+	cities: initialCityScores,
+	metricGroups: initialMetricGroups,
 	isCalculating: false,
 	sortedMetric: {
 		accessor: 'score' as Metric['accessor'],

@@ -9,7 +9,7 @@ import {
 	LinkedInIcon,
 	InvisibleLink,
 } from '@nickjmorrow/react-component-library';
-import { APP_NAME } from 'core/constants';
+import { appName } from 'core/constants';
 
 export const Header: React.FC = () => {
 	const theme = useThemeContext();
@@ -21,15 +21,15 @@ export const Header: React.FC = () => {
 		<StyledHeader theme={theme}>
 			<Left />
 			<Center>
-				<Title theme={theme}>{APP_NAME}</Title>
+				<Title theme={theme}>{appName}</Title>
 			</Center>
 			<Right>
 				<IconGroup>
 					<InvisibleLink href={githubUrl} target={'_blank'}>
-						<GithubIcon colorVariant={'secondaryLight'} style={iconStyles} />
+						<GithubIcon colorVariant={'secondaryDark'} style={iconStyles} />
 					</InvisibleLink>
 					<InvisibleLink href={linkedInUrl} target={'_blank'}>
-						<LinkedInIcon colorVariant={'secondaryLight'} style={iconStyles} />
+						<LinkedInIcon colorVariant={'secondaryDark'} style={iconStyles} />
 					</InvisibleLink>
 				</IconGroup>
 			</Right>
@@ -58,16 +58,17 @@ const Right = styled(HeaderSection)`
 `;
 
 const StyledHeader = styled('header')<{ theme: Theme }>`
-	height: 100px;
+	height: 80px;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: ${p => p.theme.colors.core.cs5};
+	background-color: white;
 `;
 
 const Title = styled(Typography)<{ theme: Theme }>`
-	font-family: ${p => p.theme.typography.fontFamily.title};
-	font-size: ${p => p.theme.typography.fontSizes.fs9};
-	color: ${p => p.theme.colors.neutral.cs1};
+	font-size: ${p => p.theme.typography.fontSizes.fs8};
+	color: ${p => p.theme.colors.neutral.cs7};
+	line-height: 48px;
+	width: max-content;
 `;

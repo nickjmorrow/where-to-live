@@ -1,4 +1,5 @@
 export interface City {
+	cityId: number;
 	label: string;
 	score: number;
 	population: number;
