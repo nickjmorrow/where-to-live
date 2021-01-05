@@ -20,7 +20,7 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@welldone-software/why-did-you-render": "^4.0.3",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "calendar-base": "^0.3.0",
     "change-case": "^4.1.1",
     "history": "^4.10.1",
